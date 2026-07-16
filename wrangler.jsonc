@@ -1,0 +1,9 @@
+{
+  // Static-assets-only Worker: no server code, no build step.
+  // Serves the files in this repo (index.html + assets/) directly from Cloudflare's edge.
+  "name": "ucc-latam-demo",
+  "compatibility_date": "2026-07-16",
+  "assets": {
+    "directory": "./"
+  }
+}
