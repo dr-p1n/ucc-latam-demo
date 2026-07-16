@@ -2,7 +2,7 @@
 
 A single-page concept site built for a partner/investor pitch (via Loom walkthrough) for **UCC (Ultimate Combat Challenge)**, Panama's oldest MMA promotion. The pitch: a revenue-share model — PPV per event plus a cut of streaming, ecommerce, and ad sales — with no upfront payment from UCC.
 
-**Live demo:** _add your `*.pages.dev` URL here after deploying_
+**Live demo:** https://ucc-latam-demo.julioernestolv.workers.dev
 
 ## What's in it
 
@@ -21,18 +21,17 @@ Vanilla HTML/CSS/JS, single file, zero build step, zero dependencies (Google Fon
 
 Just open `index.html` in a browser — no server or build required.
 
-## Deploying (Cloudflare Pages)
+## Deploying (Cloudflare Worker — static assets)
 
-1. Push this repo to GitHub.
-2. In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to Git**, select this repo.
-3. Build settings: **Framework preset: None**, **Build command: (blank)**, **Build output directory: /**.
-4. Deploy. Cloudflare assigns a `*.pages.dev` URL automatically; every push to `main` redeploys.
+Deployed as a static-assets-only Cloudflare Worker (no server code, no build step). Config lives in [`wrangler.jsonc`](wrangler.jsonc); [`.assetsignore`](.assetsignore) keeps `.git`, config, and docs out of what's served.
 
-Alternative (CLI, no GitHub connection needed):
+CLI deploy:
 
 ```bash
-npx wrangler pages deploy .
+npx wrangler deploy
 ```
+
+To enable auto-redeploy on every push to `main`, connect this repo under the Worker's **Settings → Builds** in the Cloudflare dashboard (Workers Builds).
 
 ## Notes
 
