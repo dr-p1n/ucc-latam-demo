@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>UCC LATAM — Ultimate Combat Challenge</title>
+<meta name="description" content="Concept pitch demo for UCC (Ultimate Combat Challenge), Panama's oldest MMA promotion — streaming, ecommerce, curated fight archive, and live odds/trends, in a single-page site."/>
+<meta property="og:title" content="UCC LATAM — Ultimate Combat Challenge"/>
+<meta property="og:description" content="Concept pitch demo built for a partner/investor pitch: PPV streaming, ecommerce, curated Netflix-style fight archive, and a live odds/trends panel."/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="assets/ucc-logo-icon.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --r:#D90000;--r2:#FF2020;--gold:#C9A84C;
+  --black:#000;--ink:#080808;--card:#111;--border:rgba(255,255,255,0.07);
+  --text:#EFEFEF;--dim:#555;--dim2:#777;
+  --H:'Big Shoulders Display',sans-serif;
+  --BC:'DM Sans',sans-serif;
+  --B:'DM Sans',sans-serif;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--black);color:var(--text);font-family:var(--B);display:flex;flex-direction:column}
+/* ── NAV ── */
+nav{
+  flex-shrink:0;height:60px;
+  display:flex;align-items:stretch;justify-content:space-between;
+  padding:0 40px;
+  background:rgba(0,0,0,0.97);
+  border-bottom:1px solid var(--border);
+  position:relative;z-index:200;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--H);font-size:1.5rem;letter-spacing:0.14em;color:#fff;
+  flex-shrink:0;margin-right:32px;cursor:pointer;
+}
+.logo-oct{
+  width:28px;height:28px;flex-shrink:0;
+}
+.logo-mark{height:32px;width:auto;flex-shrink:0;filter:none!important}
+.logo em{color:var(--r);font-style:normal}
+.nav-tabs{display:flex;align-items:stretch}
+.nav-tab{
+  display:flex;align-items:center;padding:0 20px;
+  font-family:var(--BC);font-weight:700;
+  font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--dim2);cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:color .15s,border-color .15s;white-space:nowrap;
+}
+.nav-tab:hover{color:#fff}
+.nav-tab.active{color:#fff;border-bottom-color:var(--r)}
+.nav-r{display:flex;align-items:center;gap:10px;margin-left:20px}
+.nav-sub-btn{
+  background:var(--r);color:#fff;padding:9px 22px;border:none;cursor:pointer;
+  font-family:var(--BC);font-weight:800;
+  font-size:0.74rem;letter-spacing:0.12em;text-transform:uppercase;
+  transition:background .15s;
+}
+.nav-sub-btn:hover{background:var(--r2)}
+/* ── CART ── */
+.cart-btn{
+  position:relative;background:none;border:none;cursor:pointer;
+  color:var(--text);padding:8px;display:flex;align-items:center;justify-content:center;
+  transition:color .15s;
+}
+.cart-btn:hover{color:var(--r2)}
+.cart-btn svg{width:20px;height:20px;fill:currentColor}
+.cart-badge{
+  position:absolute;top:2px;right:2px;
+  min-width:16px;height:16px;padding:0 3px;border-radius:50%;
+  background:var(--r);color:#fff;
+  font-family:var(--BC);font-weight:800;font-size:0.6rem;
+  display:flex;align-items:center;justify-content:center;line-height:1;
+}
+.cart-badge.zero{background:rgba(255,255,255,0.15);color:var(--dim2)}
+.cart-drawer{
+  position:fixed;top:60px;right:0;bottom:0;width:380px;max-width:90vw;
+  background:var(--ink);border-left:1px solid var(--border);
+  z-index:500;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .3s ease;
+  box-shadow:-10px 0 40px rgba(0,0,0,0.5);
+}
+.cart-drawer.open{transform:translateX(0)}
+.cart-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 22px;border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.cart-head h3{
+  font-family:var(--H);font-size:1.4rem;letter-spacing:0.06em;text-transform:uppercase;color:#fff;
+}
+.cart-close{
+  background:none;border:none;color:var(--dim2);cursor:pointer;
+  font-size:1.1rem;line-height:1;padding:4px;transition:color .15s;
+}
+.cart-close:hover{color:#fff}
+.cart-items{flex:1;overflow-y:auto;padding:14px 22px}
+.cart-empty{
+  text-align:center;padding:40px 0;
+  font-family:var(--BC);font-weight:600;
+  font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim2);
+}
+.cart-item{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:16px 0;border-bottom:1px solid var(--border);
+}
+.ci-name{
+  font-family:var(--BC);font-weight:800;font-size:0.82rem;letter-spacing:0.03em;
+  text-transform:uppercase;color:#fff;line-height:1.3;margin-bottom:8px;
+}
+.ci-qty-row{display:flex;align-items:center;gap:10px}
+.ci-qty-btn{
+  width:22px;height:22px;border:1px solid var(--border);background:none;color:#fff;
+  cursor:pointer;font-family:var(--BC);font-weight:700;font-size:0.8rem;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
+.ci-qty-btn:hover{border-color:var(--r);background:rgba(217,0,0,0.1)}
+.ci-qty-val{font-family:var(--BC);font-weight:700;font-size:0.8rem;color:#fff;min-width:16px;text-align:center}
+.ci-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
+.ci-price{font-family:var(--H);font-size:1.15rem;color:#fff}
+.ci-remove{
+  background:none;border:none;color:var(--dim2);cursor:pointer;
+  font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
+  font-family:var(--BC);font-weight:600;transition:color .15s;
+}
+.ci-remove:hover{color:var(--r)}
+.cart-foot{padding:18px 22px 22px;border-top:1px solid var(--border);flex-shrink:0}
+.cart-subtotal-row{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;
+}
+.cs-lbl{
+  font-family:var(--BC);font-weight:700;font-size:0.7rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--dim2);
+}
+.cs-val{font-family:var(--H);font-size:1.6rem;color:#fff}
+.cart-checkout-btn{
+  width:100%;padding:14px;border:none;cursor:pointer;
+  background:var(--r);color:#fff;
+  font-family:var(--BC);font-weight:800;font-size:0.78rem;letter-spacing:0.12em;
+  text-transform:uppercase;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.cart-checkout-btn:hover{background:var(--r2)}
+/* ── TICKER ── */
+.ticker{
+  flex-shrink:0;background:var(--r);
+  padding:0 40px;height:30px;
+  display:flex;align-items:center;gap:20px;overflow:hidden;
+}
+.ticker-lbl{
+  font-family:var(--BC);font-weight:900;
+  font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(255,255,255,0.65);flex-shrink:0;
+  border-right:1px solid rgba(255,255,255,0.25);padding-right:20px;
+}
+.ticker-track{flex:1;overflow:hidden}
+.ticker-inner{
+  display:inline-flex;gap:0;
+  animation:tick 30s linear infinite;white-space:nowrap;
+}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tf{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;
+  color:#fff;padding:0 28px;display:inline-flex;align-items:center;
+}
+.tf span{color:rgba(255,255,255,0.35);margin:0 6px}
+.tf-odds{
+  display:inline-flex;align-items:center;
+  font-family:var(--BC);font-weight:800;
+  font-size:0.66rem;letter-spacing:0.03em;text-transform:none;
+  color:#00FF66;background:rgba(0,0,0,0.28);
+  border:1px solid rgba(0,255,102,0.4);border-radius:3px;
+  padding:2px 8px;margin-left:12px;
+}
+.ticker-sponsor{
+  display:flex;align-items:center;gap:7px;flex-shrink:0;cursor:pointer;
+  font-family:var(--BC);font-weight:800;font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:#00FF66;border-right:1px solid rgba(255,255,255,0.25);padding-right:20px;margin-right:20px;
+  transition:opacity .15s;
+}
+.ticker-sponsor:hover{opacity:0.75}
+.ticker-sponsor strong{color:#00FF66;font-weight:900}
+.ticker-sponsor-dot{
+  width:6px;height:6px;border-radius:50%;background:#00FF66;
+  box-shadow:0 0 6px #00FF66;animation:blink 1.4s ease-in-out infinite;flex-shrink:0;
+}
+/* ── PAGES ── */
+.page-wrap{flex:1;overflow:hidden;position:relative}
+.page{
+  position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.page.active{opacity:1;pointer-events:all}
+.page::-webkit-scrollbar{width:3px}
+.page::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
+/* ─────────────────────────────────────
+   PAGE: INICIO
+───────────────────────────────────── */
+#p-inicio{background:var(--black)}
+/* Hero Carousel */
+.hero{
+  position:relative;
+  height:calc(100vh - 90px);
+  overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;
+}
+.hero-slides{position:absolute;inset:0}
+.hero-slide{
+  position:absolute;inset:0;
+  opacity:0;transition:opacity 1.2s ease;
+  background-size:cover;background-position:right center;
+}
+.hero-slide.active{opacity:1}
+/* Ken Burns on each slide */
+.hero-slide:nth-child(1){background-image:url('https://images.unsplash.com/photo-1495555499155-29db2c1db3fe?w=1800&q=90&auto=format&fit=crop');animation:kb1 8s ease-in-out infinite alternate}
+.hero-slide:nth-child(2){background-image:url('https://images.unsplash.com/photo-1777305629162-2b0714518f14?w=1800&q=90&auto=format&fit=crop');animation:kb2 8s ease-in-out infinite alternate}
+.hero-slide:nth-child(3){background-image:url('https://images.unsplash.com/photo-1780476871385-311b94435524?w=1800&q=90&auto=format&fit=crop');animation:kb3 8s ease-in-out infinite alternate}
+@keyframes kb1{0%{transform:scale(1.08) translate(0,0)}100%{transform:scale(1) translate(-1%,-1%)}}
+@keyframes kb2{0%{transform:scale(1) translate(-1%,0)}100%{transform:scale(1.07) translate(1%,-1%)}}
+@keyframes kb3{0%{transform:scale(1.06) translate(1%,-1%)}100%{transform:scale(1) translate(0,1%)}}
+.hero-grad{
+  position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(to top,#000 0%,rgba(0,0,0,0.65) 35%,rgba(0,0,0,0.0) 65%),
+    linear-gradient(to right,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.78) 38%,rgba(0,0,0,0.15) 62%,transparent 78%);
+}
+.hero-red-bar{position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--r);z-index:3}
+.hero-dots{
+  position:absolute;bottom:80px;right:40px;z-index:4;
+  display:flex;gap:8px;
+}
+.hero-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,0.3);
+  cursor:pointer;transition:background .2s,transform .2s;
+}
+.hero-dot.active{background:var(--r);transform:scale(1.4)}
+.hero-body{position:relative;z-index:3;padding:0 44px 52px}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.live-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--r);
+  animation:blink 1.4s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.hero-eyebrow span{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(255,255,255,0.45);
+}
+.hero h1{
+  font-family:var(--H);
+  font-size:clamp(5.5rem,12vw,11rem);
+  line-height:0.86;letter-spacing:0.015em;text-transform:uppercase;
+  color:#fff;margin-bottom:20px;
+}
+.hero h1 em{color:var(--r);font-style:normal}
+.hero-sub{
+  font-family:var(--BC);font-weight:400;
+  font-size:clamp(0.9rem,1.8vw,1.15rem);
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.38);margin-bottom:30px;
+}
+.hero-btns{display:flex;gap:12px;align-items:center}
+.btn-r{
+  background:var(--r);color:#fff;padding:13px 30px;border:none;cursor:pointer;
+  font-family:var(--BC);font-weight:800;
+  font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;
+  transition:background .15s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-r:hover{background:var(--r2)}
+.btn-ghost{
+  border:1.5px solid rgba(255,255,255,0.22);color:#fff;
+  padding:13px 30px;background:none;cursor:pointer;
+  font-family:var(--BC);font-weight:700;
+  font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;
+  transition:border-color .15s;
+}
+.btn-ghost:hover{border-color:#fff}
+/* Stats — hero overlay, bottom-right */
+.stats-bar{
+  position:absolute;bottom:32px;right:40px;z-index:10;
+  display:flex;gap:0;
+}
+.stat{padding:12px 20px;border-right:1px solid rgba(255,255,255,0.12)}
+.stat:last-child{border-right:none}
+.stat-val{
+  font-family:var(--H);font-size:1.3rem;color:#fff;line-height:1;
+}
+.stat-val em{color:var(--r);font-style:normal}
+.stat-lbl{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.5rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);margin-top:3px;
+}
+/* Event strip */
+.ev-strip{background:var(--ink);padding:36px 40px 52px}
+.strip-head{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;
+}
+.strip-head h3{
+  font-family:var(--H);font-size:1.7rem;letter-spacing:0.06em;text-transform:uppercase;color:#fff;
+}
+.strip-head a{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--r);cursor:pointer;
+}
+.ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.ev-card{
+  position:relative;overflow:hidden;height:240px;cursor:pointer;background:#0d0d0d;
+}
+.ev-card img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:brightness(0.38) saturate(0.7);
+  transition:filter .35s,transform .5s ease;
+}
+.ev-card:hover img{filter:brightness(0.6) saturate(1.1);transform:scale(1.04)}
+.ev-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:20px 22px;
+  background:linear-gradient(to top,rgba(0,0,0,0.94) 0%,transparent 100%);
+}
+.ev-num{font-family:var(--H);font-size:0.82rem;letter-spacing:0.1em;color:var(--r);margin-bottom:3px}
+.ev-name{
+  font-family:var(--BC);font-weight:800;
+  font-size:1rem;letter-spacing:0.04em;text-transform:uppercase;color:#fff;
+}
+.ev-date{font-family:var(--B);font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:4px}
+.ev-badge-next{
+  position:absolute;top:14px;right:14px;
+  font-family:var(--BC);font-weight:800;
+  font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;
+  background:var(--r);color:#fff;padding:4px 10px;
+}
+/* ─────────────────────────────────────
+   PAGE: EN VIVO
+───────────────────────────────────── */
+#p-envivo{background:var(--black)}
+.live-hero{
+  position:relative;height:56vh;min-height:380px;overflow:hidden;
+}
+.live-hero-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1680022702604-292f21514497?w=1800&q=90&auto=format&fit=crop') center/cover;
+  filter:brightness(0.35) saturate(0.8);
+  animation:kb1 10s ease-in-out infinite alternate;
+}
+.live-hero-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(0,0,0,0.9) 30%,transparent 70%),
+             linear-gradient(to top,rgba(0,0,0,0.8) 0%,transparent 55%);
+}
+.live-hero-content{
+  position:absolute;bottom:0;left:0;padding:44px;max-width:600px;
+}
+.badge-live{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--r);color:#fff;
+  font-family:var(--BC);font-weight:900;
+  font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;
+  padding:5px 14px;margin-bottom:14px;
+}
+.badge-live::before{
+  content:'';width:6px;height:6px;border-radius:50%;background:#fff;
+  animation:blink 1.2s infinite;
+}
+.live-title{
+  font-family:var(--H);
+  font-size:clamp(2.8rem,5vw,4.5rem);
+  line-height:0.9;letter-spacing:0.02em;text-transform:uppercase;color:#fff;margin-bottom:8px;
+}
+.live-meta{
+  font-family:var(--BC);font-weight:500;
+  font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase;
+  color:rgba(255,255,255,0.38);margin-bottom:22px;
+}
+.live-body{padding:36px 40px}
+.section-h{
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:0;
+}
+.section-h h3{
+  font-family:var(--H);font-size:1.4rem;letter-spacing:0.06em;text-transform:uppercase;color:#fff;
+}
+.section-h span{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim2);
+}
+.fight-row{
+  display:flex;align-items:center;
+  border-bottom:1px solid var(--border);
+  padding:16px 0;gap:16px;
+}
+.fight-wt{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--dim2);width:110px;flex-shrink:0;
+  border-left:2px solid var(--r);padding-left:10px;
+}
+.fight-wt em{display:block;color:var(--r);font-style:normal;font-size:0.55rem;letter-spacing:0.16em;margin-top:2px}
+.fight-fighters{flex:1;display:flex;align-items:center;gap:14px}
+.fn{font-family:var(--BC);font-weight:800;font-size:1.05rem;letter-spacing:0.04em;text-transform:uppercase;color:#fff}
+.fr{font-family:var(--B);font-size:0.68rem;color:var(--dim2)}
+.vs{font-family:var(--H);font-size:1rem;letter-spacing:0.08em;color:var(--r);flex-shrink:0}
+.fight-rounds{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--dim2);text-align:right;width:80px;flex-shrink:0;
+}
+.plans-block{padding:36px 40px 52px;background:var(--ink)}
+.plans-3{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border)}
+.plan{padding:32px 28px;border-right:1px solid var(--border);position:relative}
+.plan:last-child{border-right:none}
+.plan.featured{background:rgba(217,0,0,0.04)}
+.plan.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--r)}
+.plan-tag{font-family:var(--BC);font-weight:700;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--r);margin-bottom:8px}
+.plan-name{font-family:var(--H);font-size:1.9rem;letter-spacing:0.06em;text-transform:uppercase;color:#fff}
+.plan-price{font-family:var(--H);font-size:3rem;color:#fff;line-height:1.1;margin:6px 0}
+.plan-price sup{font-size:1.1rem;vertical-align:super}
+.plan-price sub{font-family:var(--B);font-size:0.75rem;font-weight:300;color:var(--dim2)}
+.plan hr{border:none;border-top:1px solid var(--border);margin:18px 0}
+.plan ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.plan ul li{font-size:0.8rem;color:rgba(255,255,255,0.5);display:flex;align-items:center;gap:8px}
+.plan ul li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--r);flex-shrink:0}
+.plan .btn-r,.plan .btn-ghost{display:block;text-align:center}
+/* ─────────────────────────────────────
+   PAGE: ARCHIVO
+───────────────────────────────────── */
+#p-archivo{background:var(--ink)}
+/* ── Netflix-style hero ── */
+.arc-hero{position:relative;height:62vh;min-height:420px;overflow:hidden;display:flex;align-items:flex-end}
+.arc-hero-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1545191050-96042d612b1f?w=1800&q=90&auto=format&fit=crop') center 25%/cover;
+  filter:brightness(0.42) saturate(0.7);
+  animation:kb1 11s ease-in-out infinite alternate;
+}
+.arc-hero-grad{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to top,var(--ink) 0%,rgba(8,8,8,0.55) 40%,transparent 78%),
+    linear-gradient(to right,rgba(0,0,0,0.9) 15%,rgba(0,0,0,0.35) 55%,transparent 80%);
+}
+.arc-hero-content{position:relative;z-index:2;padding:0 44px 50px;max-width:620px}
+.arc-hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--BC);font-weight:800;font-size:0.66rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--r);margin-bottom:16px;
+}
+.arc-hero-badge::before{content:'';width:18px;height:2px;background:var(--r)}
+.arc-hero-title{
+  font-family:var(--H);font-size:clamp(2.6rem,5.5vw,4.6rem);
+  line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;color:#fff;margin-bottom:14px;
+}
+.arc-hero-meta{
+  font-family:var(--BC);font-weight:600;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.5);margin-bottom:16px;
+}
+.arc-hero-meta span{color:var(--gold)}
+.arc-hero-desc{
+  font-family:var(--B);font-size:0.9rem;line-height:1.6;color:rgba(255,255,255,0.65);margin-bottom:26px;
+}
+.arc-hero-btns{display:flex;gap:12px}
+/* ── Quick jump chips ── */
+.arc-jump-row{display:flex;gap:8px;padding:24px 44px 4px;flex-wrap:wrap}
+.arc-chip{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;
+  border:1px solid var(--border);color:var(--dim2);
+  padding:7px 16px;background:none;cursor:pointer;transition:all .15s;
+}
+.arc-chip:hover{border-color:var(--r);color:#fff;background:rgba(217,0,0,0.07)}
+/* ── Netflix-style horizontal rows ── */
+.arc-row{padding:26px 0 4px}
+.arc-row-head{padding:0 44px;margin-bottom:12px;display:flex;align-items:baseline;gap:10px}
+.arc-row-head h3{font-family:var(--H);font-size:1.5rem;letter-spacing:0.05em;text-transform:uppercase;color:#fff}
+.arc-row-head span{font-family:var(--BC);font-weight:600;font-size:0.64rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim2)}
+.arc-row-track-wrap{position:relative}
+.arc-row-track-wrap:hover .arc-row-nav{opacity:1}
+.arc-row-track{
+  display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;
+  padding:4px 44px 18px;
+  scrollbar-width:none;
+}
+.arc-row-track::-webkit-scrollbar{display:none}
+.arc-row-nav{
+  position:absolute;top:0;bottom:18px;width:44px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(to right,var(--ink) 20%,transparent);
+  border:none;color:#fff;cursor:pointer;z-index:10;opacity:0;transition:opacity .2s;
+  font-family:var(--H);font-size:1.6rem;
+}
+.arc-row-nav.next{right:0;left:auto;background:linear-gradient(to left,var(--ink) 20%,transparent)}
+.arc-row-nav.prev{left:0}
+.arc-rcard{
+  position:relative;flex:0 0 260px;aspect-ratio:16/9;overflow:hidden;
+  cursor:pointer;background:#0d0d0d;transition:transform .25s ease;transform-origin:center;
+}
+.arc-rcard:hover{transform:scale(1.08);z-index:5;box-shadow:0 14px 34px rgba(0,0,0,0.6)}
+.arc-rcard img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:brightness(0.55) saturate(0.75);
+  transition:filter .3s;
+}
+.arc-rcard:hover img{filter:brightness(0.8) saturate(1.05)}
+.arc-rcard-hover{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .2s;background:rgba(0,0,0,0.15);
+}
+.arc-rcard:hover .arc-rcard-hover{opacity:1}
+.arc-play-circle{
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(217,0,0,0.92);
+  display:flex;align-items:center;justify-content:center;
+}
+.arc-play-circle svg{fill:#fff;width:13px;height:13px;margin-left:2px}
+.arc-rcard-info{
+  position:absolute;bottom:0;left:0;right:0;padding:9px 11px;
+  background:linear-gradient(to top,rgba(0,0,0,0.95) 0%,transparent 100%);
+}
+.arc-rc-num{font-family:var(--H);font-size:0.72rem;letter-spacing:0.06em;color:var(--r)}
+.arc-rc-name{font-family:var(--BC);font-weight:800;font-size:0.76rem;letter-spacing:0.02em;text-transform:uppercase;color:#fff;line-height:1.2;margin-top:1px}
+.arc-rc-dur{font-family:var(--B);font-size:0.58rem;color:rgba(255,255,255,0.35);margin-top:2px}
+.arc-yt-tag{
+  position:absolute;top:8px;right:8px;
+  display:flex;align-items:center;gap:4px;
+  background:rgba(0,0,0,0.65);padding:3px 7px;
+  font-family:var(--BC);font-weight:700;font-size:0.55rem;letter-spacing:0.08em;color:rgba(255,255,255,0.7);
+}
+.arc-yt-tag svg{width:11px;height:11px;fill:#FF0000}
+/* ── Modal / video overlay ── */
+.arc-modal{
+  position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.arc-modal.open{opacity:1;pointer-events:all}
+.arc-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.88)}
+.arc-modal-box{
+  position:relative;z-index:2;width:min(880px,90vw);background:var(--card);
+  border:1px solid var(--border);transform:scale(0.96);transition:transform .2s;
+}
+.arc-modal.open .arc-modal-box{transform:scale(1)}
+.arc-modal-close{
+  position:absolute;top:-42px;right:0;background:none;border:none;color:#fff;
+  font-size:1.6rem;cursor:pointer;line-height:1;padding:6px;
+}
+.arc-modal-video{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+.arc-modal-video iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.arc-modal-info{padding:20px 24px 26px}
+.arc-modal-title{font-family:var(--H);font-size:1.5rem;letter-spacing:0.04em;text-transform:uppercase;color:#fff}
+.arc-modal-meta{font-family:var(--BC);font-weight:600;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim2);margin-top:6px}
+/* ─────────────────────────────────────
+   PAGE: TIENDA
+───────────────────────────────────── */
+#p-tienda{background:var(--black)}
+.shop-hero{
+  position:relative;height:48vh;min-height:320px;overflow:hidden;
+}
+.shop-hero-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1611077479643-5b3c01381f9e?w=1800&q=90&auto=format&fit=crop') center/cover;
+  filter:brightness(0.3) saturate(0.7);
+  animation:kb2 10s ease-in-out infinite alternate;
+}
+.shop-hero-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,#000 0%,rgba(0,0,0,0.35) 55%,transparent 100%);
+}
+.shop-hero-content{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:36px 40px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
+}
+.shop-h1{font-family:var(--H);font-size:clamp(3rem,6vw,5.5rem);line-height:0.88;letter-spacing:0.02em;text-transform:uppercase;color:#fff}
+.shop-eyebrow{font-family:var(--BC);font-weight:700;font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--r);display:block;margin-bottom:10px}
+.shop-body{padding:32px 40px 0}
+.cats{display:flex;gap:6px;margin-bottom:28px}
+.cbtn{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;
+  border:1px solid var(--border);color:var(--dim2);
+  padding:8px 16px;background:none;cursor:pointer;transition:all .15s;
+}
+.cbtn:hover,.cbtn.on{border-color:var(--r);color:#fff;background:rgba(217,0,0,0.07)}
+/* Shop filter toolbar */
+.shop-filter-bar{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--border);
+}
+.shop-filter-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.shop-filter-lbl{
+  font-family:var(--BC);font-weight:700;font-size:0.65rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--dim2);
+}
+.fselect{
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--BC);font-weight:700;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;
+  border:1px solid var(--border);color:var(--dim2);
+  padding:8px 14px;background:none;cursor:pointer;transition:all .15s;
+}
+.fselect:hover,.fselect.on{border-color:var(--r);color:#fff;background:rgba(217,0,0,0.07)}
+.fs-chev{display:inline-block;font-size:0.6rem;transition:transform .15s}
+.fselect.on .fs-chev{transform:rotate(180deg)}
+.shop-filter-right{display:flex;align-items:center;gap:16px}
+.shop-count{
+  font-family:var(--BC);font-weight:600;font-size:0.68rem;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--dim2);
+}
+.shop-empty{
+  display:none;padding:70px 0;text-align:center;
+  font-family:var(--BC);font-weight:600;font-size:0.75rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--dim2);
+}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px}
+.prod{background:#fff;cursor:pointer;overflow:hidden;transition:box-shadow .2s,transform .2s}
+.prod:hover{box-shadow:0 10px 34px rgba(0,0,0,0.4);transform:translateY(-2px)}
+.prod-thumb{position:relative;height:360px;overflow:hidden;background:#fff}
+.prod-thumb img{
+  width:100%;height:100%;object-fit:cover;
+  filter:none!important;
+  transition:transform .5s ease;
+}
+.prod:hover .prod-thumb img{transform:scale(1.03)}
+.prod-badge{
+  position:absolute;top:12px;left:12px;
+  font-family:var(--BC);font-weight:800;
+  font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;
+  background:var(--r);color:#fff;padding:3px 9px;
+}
+.prod-info{padding:16px 16px 20px;background:#fff}
+.prod-cat{font-family:var(--BC);font-weight:600;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--r);margin-bottom:4px}
+.prod-name{font-family:var(--BC);font-weight:800;font-size:0.95rem;letter-spacing:0.04em;text-transform:uppercase;color:#111;line-height:1.25;margin-bottom:10px}
+.prod-row{display:flex;align-items:center;justify-content:space-between}
+.prod-price{font-family:var(--H);font-size:1.5rem;color:#111}
+.prod-price s{font-family:var(--B);font-size:0.7rem;color:#999;margin-left:5px}
+.add-btn{
+  font-family:var(--BC);font-weight:800;
+  font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
+  border:1px solid #111;color:#fff;
+  padding:6px 12px;background:#111;cursor:pointer;transition:all .15s;
+}
+.add-btn:hover{background:var(--r);border-color:var(--r);color:#fff}
+.ticket-bar{
+  background:var(--r);padding:26px 40px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.tb-ev{font-family:var(--H);font-size:1.6rem;letter-spacing:0.06em;text-transform:uppercase;color:#fff}
+.tb-info{font-family:var(--BC);font-weight:500;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:3px}
+.tb-prices{display:flex;gap:26px}
+.tp{text-align:center}
+.tp-val{font-family:var(--H);font-size:1.9rem;color:#fff;line-height:1}
+.tp-lbl{font-family:var(--BC);font-weight:600;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-top:2px}
+.btn-wh{
+  background:#fff;color:var(--r);padding:13px 28px;border:none;cursor:pointer;
+  font-family:var(--BC);font-weight:900;
+  font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;
+  transition:opacity .15s;white-space:nowrap;
+}
+.btn-wh:hover{opacity:.87}
+/* ─────────────────────────────────────
+   PAGE: PODCAST
+───────────────────────────────────── */
+#p-podcast{background:var(--black)}
+.pod-hero{
+  position:relative;height:50vh;min-height:340px;overflow:hidden;
+  display:flex;align-items:flex-end;
+}
+.pod-hero-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1680022702604-292f21514497?w=1800&q=90&auto=format&fit=crop') center/cover;
+  filter:brightness(0.25) saturate(0.6);
+  animation:kb2 10s ease-in-out infinite alternate;
+}
+.pod-hero-grad{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to right,rgba(0,0,0,0.92) 35%,transparent 70%),
+    linear-gradient(to top,rgba(0,0,0,0.9) 0%,transparent 60%);
+}
+.pod-hero-content{
+  position:relative;z-index:2;
+  padding:44px;display:flex;align-items:flex-end;justify-content:space-between;width:100%;gap:32px;
+}
+.pod-show-label{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--r);display:block;margin-bottom:10px;
+}
+.pod-show-title{
+  font-family:var(--H);
+  font-size:clamp(3rem,7vw,6rem);
+  line-height:0.87;letter-spacing:0.015em;text-transform:uppercase;color:#fff;
+  margin-bottom:6px;
+}
+.pod-show-sub{
+  font-family:var(--BC);font-weight:400;
+  font-size:0.88rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.35);margin-bottom:24px;
+}
+.pod-platforms{display:flex;gap:10px;flex-wrap:wrap}
+.plat-btn{
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--BC);font-weight:700;
+  font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
+  border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.65);
+  padding:8px 16px;background:none;cursor:pointer;transition:all .15s;
+}
+.plat-btn:hover{border-color:#fff;color:#fff}
+.plat-btn svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
+.pod-latest-label{
+  flex-shrink:0;text-align:right;
+}
+.pod-latest-label span{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--dim2);display:block;margin-bottom:8px;
+}
+.pod-latest-ep{
+  font-family:var(--BC);font-weight:800;
+  font-size:0.95rem;letter-spacing:0.04em;text-transform:uppercase;
+  color:#fff;max-width:260px;text-align:right;line-height:1.3;
+}
+.pod-latest-meta{
+  font-family:var(--B);font-size:0.72rem;
+  color:var(--dim2);margin-top:5px;text-align:right;
+}
+/* Episode list */
+.pod-body{padding:0 40px 52px;background:var(--ink)}
+.pod-section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:32px 0 18px;
+  border-bottom:1px solid var(--border);margin-bottom:0;
+}
+.pod-section-head h3{
+  font-family:var(--H);font-size:1.5rem;letter-spacing:0.06em;text-transform:uppercase;color:#fff;
+}
+.pod-section-head span{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim2);
+}
+.ep-row{
+  display:grid;
+  grid-template-columns:60px 1fr auto;
+  align-items:center;gap:20px;
+  padding:18px 0;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background .15s;
+}
+.ep-row:hover{background:rgba(255,255,255,0.02)}
+.ep-num{
+  font-family:var(--H);font-size:1.8rem;color:rgba(255,255,255,0.1);
+  letter-spacing:0.04em;text-align:right;
+}
+.ep-main{}
+.ep-tag{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--r);margin-bottom:4px;
+}
+.ep-title{
+  font-family:var(--BC);font-weight:800;
+  font-size:1rem;letter-spacing:0.04em;text-transform:uppercase;
+  color:#fff;line-height:1.25;margin-bottom:5px;
+}
+.ep-desc{
+  font-family:var(--B);font-size:0.78rem;
+  color:var(--dim2);line-height:1.5;
+}
+.ep-meta{
+  display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0;
+}
+.ep-dur{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--dim2);
+}
+.ep-play{
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(217,0,0,0.0);border:1px solid rgba(255,255,255,0.12);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.ep-row:hover .ep-play{background:var(--r);border-color:var(--r)}
+.ep-play svg{fill:#fff;width:12px;height:12px;margin-left:2px}
+.ep-new{
+  font-family:var(--BC);font-weight:800;
+  font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;
+  background:var(--r);color:#fff;padding:2px 7px;
+}
+/* Topics strip */
+.pod-topics{
+  background:var(--card);
+  border-top:1px solid var(--border);
+  padding:28px 40px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.pod-topics-label{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--dim2);flex-shrink:0;
+}
+.topic-chip{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
+  border:1px solid var(--border);color:rgba(255,255,255,0.45);
+  padding:6px 14px;
+}
+/* OCTAGON SVG logo */
+.oct-svg{display:block}
+/* ══════════════════════════════════════
+   PODCAST CONSOLE — LAS ODDS
+══════════════════════════════════════ */
+#p-podcast{background:#0D0D0D;overflow:hidden}
+.console{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr}
+/* Panel A */
+.panel-player{
+  border-right:1px solid rgba(255,255,255,0.05);
+  display:flex;flex-direction:column;overflow-y:auto;background:#0D0D0D;
+}
+.panel-player::-webkit-scrollbar{width:3px}
+.panel-player::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08)}
+.pl-header{
+  display:grid;grid-template-columns:110px 1fr;gap:18px;
+  padding:22px;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;
+}
+.pl-art{
+  position:relative;width:110px;height:110px;overflow:hidden;
+  border:1px solid rgba(0,255,102,0.22);flex-shrink:0;
+}
+.pl-art img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) contrast(1.2) brightness(0.45)!important}
+.pl-art-lbl{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--H);font-size:1.5rem;letter-spacing:0.1em;color:#fff;
+  text-shadow:0 0 16px rgba(0,255,102,0.6);
+}
+.pl-show-badge{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.56rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:#00FF66;display:block;margin-bottom:8px;
+}
+.pl-ep-title{
+  font-family:var(--BC);font-weight:800;
+  font-size:0.9rem;letter-spacing:0.02em;text-transform:uppercase;
+  color:#fff;line-height:1.3;margin-bottom:7px;
+}
+.pl-ep-num{font-family:var(--B);font-size:0.68rem;color:var(--dim2);margin-bottom:12px}
+.pl-plat-row{display:flex;gap:6px;flex-wrap:wrap}
+.pl-plat{
+  display:flex;align-items:center;gap:5px;
+  font-family:var(--BC);font-weight:700;
+  font-size:0.54rem;letter-spacing:0.1em;text-transform:uppercase;
+  border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.38);
+  padding:5px 8px;background:none;cursor:pointer;transition:all .15s;
+}
+.pl-plat:hover{border-color:#00FF66;color:#00FF66}
+.pl-plat svg{width:10px;height:10px;fill:currentColor;flex-shrink:0}
+/* Player controls */
+.player-ctrl-block{padding:16px 22px;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0}
+.ts-markers-row{position:relative;height:22px;margin-bottom:5px}
+.ts-mark{
+  position:absolute;transform:translateX(-50%);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.ts-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.22);
+  transition:all .2s;
+}
+.ts-mark.active .ts-dot,.ts-mark:hover .ts-dot{
+  background:#00FF66;border-color:#00FF66;box-shadow:0 0 8px #00FF66;
+}
+.ts-mark-lbl{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.42rem;letter-spacing:0.06em;text-transform:uppercase;
+  color:rgba(255,255,255,0.22);white-space:nowrap;transition:color .2s;
+}
+.ts-mark.active .ts-mark-lbl,.ts-mark:hover .ts-mark-lbl{color:#00FF66}
+.scrub-track{
+  position:relative;height:3px;background:rgba(255,255,255,0.07);
+  border-radius:2px;cursor:pointer;margin-bottom:7px;
+}
+.scrub-fill{
+  position:absolute;left:0;top:0;height:100%;
+  background:linear-gradient(to right,#00FF66,#00cc55);
+  border-radius:2px;pointer-events:none;transition:width .6s linear;
+}
+.scrub-thumb{
+  position:absolute;top:50%;transform:translate(-50%,-50%);
+  width:12px;height:12px;border-radius:50%;
+  background:#00FF66;box-shadow:0 0 10px #00FF66;
+  pointer-events:none;transition:left .6s linear;
+}
+.scrub-times{
+  display:flex;justify-content:space-between;
+  font-family:var(--BC);font-weight:600;
+  font-size:0.56rem;letter-spacing:0.08em;color:var(--dim2);
+}
+.ctrl-row{display:flex;align-items:center;justify-content:center;gap:22px;margin-top:14px}
+.ctrl-btn{
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,0.38);transition:color .15s;padding:4px;
+}
+.ctrl-btn:hover{color:#fff}
+.ctrl-btn svg{width:16px;height:16px;fill:currentColor}
+.ctrl-play{
+  width:44px;height:44px;border-radius:50%;
+  background:#00FF66;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:box-shadow .2s,transform .1s;
+}
+.ctrl-play:hover{box-shadow:0 0 20px rgba(0,255,102,0.5);transform:scale(1.05)}
+.ctrl-play svg{fill:#000;width:15px;height:15px}
+.ic-pause{display:none}
+.ctrl-play.playing .ic-play{display:none}
+.ctrl-play.playing .ic-pause{display:block}
+/* Episode description */
+.ep-desc-wrap{padding:15px 22px;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0}
+.ep-sect-lbl{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--dim2);margin-bottom:7px;
+}
+.ep-desc-text{font-family:var(--B);font-size:0.76rem;color:rgba(255,255,255,0.4);line-height:1.78}
+/* Mini episode list */
+.ep-mini-wrap{padding:14px 22px 100px}
+.ep-mini-row{
+  display:flex;align-items:center;gap:11px;
+  padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;
+}
+.ep-mini-row:hover .ep-mini-title{color:#00FF66}
+.ep-mini-n{
+  font-family:var(--H);font-size:1.05rem;
+  color:rgba(255,255,255,0.1);width:26px;text-align:right;flex-shrink:0;
+}
+.ep-mini-info{flex:1;min-width:0}
+.ep-mini-title{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.74rem;letter-spacing:0.03em;text-transform:uppercase;
+  color:rgba(255,255,255,0.52);line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transition:color .15s;
+}
+.ep-mini-dur{font-family:var(--B);font-size:0.58rem;color:var(--dim2);margin-top:3px}
+.ep-mini-ico{
+  width:27px;height:27px;border-radius:50%;flex-shrink:0;
+  border:1px solid rgba(255,255,255,0.1);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.ep-mini-row:hover .ep-mini-ico{border-color:#00FF66;background:rgba(0,255,102,0.08)}
+.ep-mini-ico svg{fill:rgba(255,255,255,0.38);width:9px;height:9px;margin-left:2px}
+/* Panel B */
+.panel-action{background:#111;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.action-top{
+  padding:15px 17px 11px;
+  border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;
+}
+.now-row{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.now-dot{
+  width:7px;height:7px;border-radius:50%;background:#00FF66;
+  box-shadow:0 0 8px #00FF66;animation:blink 1.5s ease-in-out infinite;
+}
+.now-lbl{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.54rem;letter-spacing:0.22em;text-transform:uppercase;color:#00FF66;
+}
+.action-fight-name{
+  font-family:var(--H);
+  font-size:1.4rem;letter-spacing:0.04em;text-transform:uppercase;
+  color:#fff;line-height:1;margin-bottom:3px;
+}
+.action-fight-cat{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim2);
+}
+.fight-tabs-row{
+  display:flex;overflow-x:auto;
+  border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;padding:0 5px;
+}
+.fight-tabs-row::-webkit-scrollbar{display:none}
+.ftab{
+  flex-shrink:0;padding:9px 13px;
+  font-family:var(--BC);font-weight:700;
+  font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--dim2);cursor:pointer;
+  border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;
+}
+.ftab:hover{color:#fff}
+.ftab.on{color:#00FF66;border-bottom-color:#00FF66}
+/* Odds area */
+.odds-area{flex:1;overflow-y:auto;padding:12px 15px 160px}
+.odds-area::-webkit-scrollbar{width:3px}
+.odds-area::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08)}
+.odds-cat-lbl{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.52rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--dim2);margin:13px 0 8px;
+}
+.ml-grid{display:grid;grid-template-columns:1fr 30px 1fr;gap:5px;align-items:stretch}
+.ml-btn{
+  background:#1A1A1A;border:1px solid rgba(255,255,255,0.07);
+  padding:12px 8px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.ml-btn::after{
+  content:'';position:absolute;inset:0;
+  background:rgba(0,255,102,0.07);opacity:0;transition:opacity .2s;
+}
+.ml-btn:hover::after,.ml-btn.sel::after{opacity:1}
+.ml-btn.sel{border-color:rgba(0,255,102,0.35)}
+.ml-btn.sel .ml-odds{color:#00FF66;text-shadow:0 0 12px rgba(0,255,102,0.5)}
+.ml-name{
+  font-family:var(--BC);font-weight:800;
+  font-size:0.72rem;letter-spacing:0.04em;text-transform:uppercase;
+  color:#fff;text-align:center;line-height:1.2;position:relative;z-index:1;
+}
+.ml-rec{font-family:var(--B);font-size:0.56rem;color:var(--dim2);position:relative;z-index:1}
+.ml-tag{
+  font-family:var(--BC);font-weight:600;
+  font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--dim2);position:relative;z-index:1;
+}
+.ml-odds{
+  font-family:var(--H);font-size:1.35rem;
+  color:#fff;line-height:1;transition:color .2s;position:relative;z-index:1;
+}
+.ml-vs{
+  font-family:var(--H);font-size:0.78rem;letter-spacing:0.06em;
+  color:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;
+}
+.ou-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.ou-btn{
+  background:#1A1A1A;border:1px solid rgba(255,255,255,0.07);
+  padding:10px 9px;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.ou-btn::after{
+  content:'';position:absolute;inset:0;
+  background:rgba(0,255,102,0.07);opacity:0;transition:opacity .2s;
+}
+.ou-btn:hover::after,.ou-btn.sel::after{opacity:1}
+.ou-btn.sel{border-color:rgba(0,255,102,0.35)}
+.ou-btn.sel .ou-odds{color:#00FF66;text-shadow:0 0 10px rgba(0,255,102,0.4)}
+.ou-name{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.66rem;letter-spacing:0.04em;text-transform:uppercase;
+  color:rgba(255,255,255,0.62);position:relative;z-index:1;
+}
+.ou-line{font-family:var(--B);font-size:0.52rem;color:var(--dim2);display:block;margin-top:2px}
+.ou-odds{
+  font-family:var(--H);font-size:1.1rem;color:#fff;
+  position:relative;z-index:1;transition:color .2s;
+}
+.parlay-hint{
+  margin-top:14px;padding:9px 11px;
+  background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.2);
+  display:flex;align-items:center;gap:8px;
+}
+.parlay-text{
+  font-family:var(--BC);font-weight:700;
+  font-size:0.62rem;letter-spacing:0.07em;text-transform:uppercase;
+  color:var(--gold);line-height:1.5;
+}
+/* Spot Bets — 3-column grid */
+.sb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.sb-btn{
+  background:#1A1A1A;border:1px solid rgba(255,255,255,0.07);
+  padding:11px 7px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  transition:all .2s;position:relative;overflow:hidden;text-align:center;
+}
+.sb-btn::after{
+  content:'';position:absolute;inset:0;
+  background:rgba(0,255,102,0.07);opacity:0;transition:opacity .2s;
+}
+.sb-btn:hover::after,.sb-btn.sel::after{opacity:1}
+.sb-btn.sel{border-color:rgba(0,255,102,0.35)}
+.sb-btn.sel .sb-odds{color:#00FF66;text-shadow:0 0 10px rgba(0,255,102,0.4)}
+.sb-name{
+  font-family:var(--BC);font-weight:800;
+  font-size:0.68rem;letter-spacing:0.04em;text-transform:uppercase;
+  color:#fff;position:relative;z-index:1;line-height:1.2;
+}
+.sb-note{font-family:var(--B);font-size:0.5rem;color:var(--dim2);display:block;margin-top:2px;position:relative;z-index:1}
+.sb-odds{
+  font-family:var(--H);font-size:1.15rem;color:#fff;
+  position:relative;z-index:1;transition:color .2s;margin-top:2px;
+}
+/* Odds cards are informational only — no bet placement on-site */
+.ml-btn,.ou-btn,.sb-btn{cursor:default}
+.odds-tag{
+  position:absolute;top:6px;right:6px;z-index:3;
+  font-family:var(--BC);font-weight:800;font-size:0.46rem;letter-spacing:0.05em;text-transform:uppercase;
+  padding:2px 6px;white-space:nowrap;
+}
+.odds-tag.pop{background:rgba(217,0,0,0.9);color:#fff}
+.odds-tag.value{background:rgba(201,168,76,0.9);color:#000}
+/* LIVE TRENDS PANEL */
+.trend-panel{
+  position:absolute;bottom:0;right:0;width:42%;
+  background:#141414;
+  border-top:2px solid #00FF66;
+  border-left:1px solid rgba(0,255,102,0.12);
+  transform:translateY(calc(100% - 44px));
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  z-index:60;box-shadow:0 -8px 40px rgba(0,0,0,0.7);
+}
+.trend-panel.open{transform:translateY(0)}
+.trend-handle{
+  height:44px;padding:0 15px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;user-select:none;
+}
+.trend-hl{display:flex;align-items:center;gap:9px}
+.trend-live-dot{
+  width:7px;height:7px;border-radius:50%;background:#00FF66;
+  box-shadow:0 0 8px #00FF66;animation:blink 1.5s ease-in-out infinite;flex-shrink:0;
+}
+.trend-title{
+  font-family:var(--BC);font-weight:800;
+  font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:#fff;
+}
+.trend-chevron{color:var(--dim2);transition:transform .3s;font-size:0.68rem}
+.trend-panel.open .trend-chevron{transform:rotate(180deg)}
+.trend-body{padding:0 13px 15px;max-height:340px;overflow-y:auto}
+.trend-body::-webkit-scrollbar{width:2px}
+.trend-section-lbl{
+  font-family:var(--BC);font-weight:700;font-size:0.56rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--dim2);margin:14px 0 8px;
+}
+.trend-item{
+  background:#1A1A1A;border:1px solid rgba(255,255,255,0.06);
+  padding:9px 10px;margin-bottom:6px;
+}
+.trend-item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:7px}
+.trend-pick{
+  font-family:var(--BC);font-weight:800;
+  font-size:0.7rem;letter-spacing:0.03em;text-transform:uppercase;color:#fff;line-height:1.25;
+}
+.trend-type{font-family:var(--B);font-size:0.55rem;color:var(--dim2);margin-top:2px}
+.trend-odds{font-family:var(--H);font-size:1rem;color:#00FF66;flex-shrink:0}
+.trend-bar-track{height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden}
+.trend-bar-fill{height:100%;background:linear-gradient(to right,#00FF66,#00cc55);border-radius:2px}
+.trend-pct{
+  display:block;font-family:var(--BC);font-weight:700;font-size:0.55rem;color:#00FF66;margin-top:5px;
+}
+.value-item{
+  background:#1A1A1A;border:1px solid rgba(201,168,76,0.18);
+  padding:9px 10px;margin-bottom:6px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.value-payout{
+  font-family:var(--H);font-size:0.92rem;color:var(--gold);
+  background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);
+  padding:3px 9px;flex-shrink:0;
+}
+.trend-micro{
+  text-align:center;font-family:var(--B);font-size:0.55rem;
+  color:rgba(255,255,255,0.2);letter-spacing:0.02em;line-height:1.5;margin-top:14px;
+}
+.trend-micro strong{color:rgba(0,255,102,0.5);font-weight:600}
+/* ── GLOBAL B&W TREATMENT ── */
+img{filter:grayscale(100%) contrast(1.15)!important}
+.hero-slide{filter:grayscale(100%) contrast(1.2)}
+.live-hero-bg{filter:grayscale(100%) contrast(1.2)}
+.shop-hero-bg{filter:grayscale(100%) contrast(1.2)}
+.prod-thumb img{filter:none!important}
+/* ─────────────────────────────────────
+   PAGE: GYM
+───────────────────────────────────── */
+#p-gym{background:var(--black)}
+.gym-hero{
+  position:relative;height:52vh;min-height:360px;overflow:hidden;
+  display:flex;align-items:flex-end;
+}
+.gym-hero-bg{
+  position:absolute;inset:0;
+  background:url('https://images.unsplash.com/photo-1569514195436-85d36b8d0f47?w=1800&q=90&auto=format&fit=crop') center/cover;
+  filter:grayscale(100%) contrast(1.3) brightness(0.85);
+}
+.gym-hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(0,0,0,0.88) 45%,rgba(0,0,0,0.2));
+}
+.gym-hero-content{position:relative;z-index:2;padding:0 60px 48px}
+.gym-eyebrow{
+  font-family:var(--BC);font-weight:700;font-size:0.68rem;
+  letter-spacing:0.28em;text-transform:uppercase;color:var(--r);margin-bottom:10px;
+}
+.gym-h1{
+  font-family:var(--H);font-size:clamp(3.2rem,6vw,5.5rem);
+  letter-spacing:0.04em;line-height:0.92;color:#fff;margin-bottom:18px;
+}
+.gym-sub{
+  font-family:var(--BC);font-weight:400;font-size:1.05rem;
+  color:rgba(255,255,255,0.55);letter-spacing:0.03em;max-width:440px;
+}
+/* Disciplines strip */
+.gym-disciplines{
+  display:flex;gap:0;border-bottom:1px solid var(--border);
+}
+.disc-item{
+  flex:1;padding:20px 24px;border-right:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;cursor:pointer;
+  transition:background .15s;
+}
+.disc-item:last-child{border-right:none}
+.disc-item:hover{background:rgba(255,255,255,0.04)}
+.disc-item.active-disc{background:rgba(217,0,0,0.06);border-bottom:2px solid var(--r)}
+.disc-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,0.06);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:1.1rem;
+}
+.disc-name{font-family:var(--BC);font-weight:700;font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;color:#fff}
+.disc-sub{font-family:var(--B);font-size:0.7rem;color:var(--dim2);margin-top:1px}
+/* Schedule grid */
+.gym-section{padding:48px 60px}
+/* Únete a UCC */
+.join-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.join-card{background:var(--card);padding:36px 40px;border-top:2px solid var(--r)}
+.join-card.amateur{border-top-color:var(--gold)}
+.join-tag{font-family:var(--BC);font-weight:800;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--r);margin-bottom:10px}
+.join-card.amateur .join-tag{color:var(--gold)}
+.join-title{font-family:var(--H);font-size:1.9rem;letter-spacing:0.04em;text-transform:uppercase;color:#fff;margin-bottom:12px}
+.join-desc{font-family:var(--B);font-size:0.85rem;color:rgba(255,255,255,0.55);line-height:1.6;margin-bottom:20px;max-width:440px}
+.join-list{list-style:none;margin-bottom:26px}
+.join-list li{font-family:var(--B);font-size:0.8rem;color:rgba(255,255,255,0.6);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.join-list li::before{content:'→';color:var(--r);font-size:0.7rem;flex-shrink:0}
+.join-card.amateur .join-list li::before{color:var(--gold)}
+.gym-section-hd{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:28px;
+}
+.gym-section-title{
+  font-family:var(--H);font-size:1.9rem;letter-spacing:0.06em;color:#fff;
+}
+.gym-section-tag{
+  font-family:var(--BC);font-weight:600;font-size:0.65rem;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--dim2);
+}
+/* Weekly schedule table */
+.week-table-wrap{overflow-x:auto}
+.week-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.week-table thead th{
+  font-family:var(--BC);font-weight:700;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--dim2);padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  border-right:1px solid var(--border);
+  text-align:left;
+}
+.week-table thead th.wt-th-time{width:72px;color:var(--dim)}
+.week-table td{
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:14px 14px 16px;
+  vertical-align:top;
+}
+.wt-time{
+  font-family:var(--H);font-size:1rem;letter-spacing:0.04em;color:var(--dim);
+  white-space:nowrap;width:72px;
+}
+.wt-empty{background:var(--ink)}
+.wt-disc-tag{
+  display:block;
+  font-family:var(--BC);font-weight:800;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:5px;
+}
+.wt-cls-name{
+  display:block;
+  font-family:var(--BC);font-weight:600;font-size:0.72rem;letter-spacing:0.04em;text-transform:uppercase;
+  color:rgba(255,255,255,0.55);line-height:1.3;
+}
+.d-mma{background:rgba(217,0,0,0.06)}
+.d-mma .wt-disc-tag{color:var(--r)}
+.d-bjj{background:rgba(91,155,213,0.06)}
+.d-bjj .wt-disc-tag{color:#5B9BD5}
+.d-nogi{background:rgba(160,127,212,0.06)}
+.d-nogi .wt-disc-tag{color:#A07FD4}
+.d-mt{background:rgba(201,168,76,0.06)}
+.d-mt .wt-disc-tag{color:var(--gold)}
+.d-sc{background:rgba(106,177,135,0.06)}
+.d-sc .wt-disc-tag{color:#6AB187}
+.d-spar{background:rgba(255,255,255,0.03)}
+.d-spar .wt-disc-tag{color:var(--dim2)}
+/* Coaches */
+.coaches-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2px;
+}
+.coach-card{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:pointer;}
+.coach-card img{
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(100%) contrast(1.15)!important;
+  transition:transform .5s ease;
+}
+.coach-card:hover img{transform:scale(1.04)}
+.coach-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.1) 55%);
+}
+.coach-info{
+  position:absolute;bottom:0;left:0;right:0;padding:20px;
+}
+.coach-name{font-family:var(--H);font-size:1.4rem;letter-spacing:0.04em;color:#fff;line-height:1}
+.coach-role{
+  font-family:var(--BC);font-weight:600;font-size:0.65rem;
+  letter-spacing:0.18em;text-transform:uppercase;color:var(--r);margin-top:5px;
+}
+.coach-record{font-family:var(--B);font-size:0.72rem;color:var(--dim2);margin-top:3px}
+/* Memberships */
+.mem-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+  margin-top:0;
+}
+.mem-card{
+  background:var(--card);padding:36px 28px;
+  border-top:2px solid transparent;position:relative;overflow:hidden;
+}
+.mem-card.featured{background:#111;border-top-color:var(--r)}
+.mem-card.featured::before{
+  content:'MÁS POPULAR';
+  position:absolute;top:16px;right:16px;
+  font-family:var(--BC);font-weight:700;font-size:0.55rem;letter-spacing:0.18em;
+  color:var(--r);background:rgba(217,0,0,0.1);padding:3px 8px;
+}
+.mem-tier{
+  font-family:var(--BC);font-weight:900;font-size:0.68rem;letter-spacing:0.24em;
+  text-transform:uppercase;color:var(--dim2);margin-bottom:12px;
+}
+.mem-price{
+  font-family:var(--H);font-size:3.2rem;letter-spacing:0.02em;color:#fff;line-height:1;
+  margin-bottom:4px;
+}
+.mem-price sup{font-size:1.4rem;vertical-align:super}
+.mem-cadence{font-family:var(--B);font-size:0.72rem;color:var(--dim2);margin-bottom:24px}
+.mem-features{list-style:none;margin-bottom:28px}
+.mem-features li{
+  font-family:var(--B);font-size:0.78rem;color:rgba(255,255,255,0.65);
+  padding:7px 0;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.mem-features li::before{content:'→';color:var(--r);font-size:0.7rem;flex-shrink:0}
+.mem-cta{
+  display:block;width:100%;padding:13px;text-align:center;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
+  font-family:var(--BC);font-weight:700;font-size:0.8rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:#fff;cursor:pointer;
+  transition:background .15s,border-color .15s;
+}
+.mem-cta:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.25)}
+.mem-card.featured .mem-cta{background:var(--r);border-color:var(--r);color:#fff}
+.mem-card.featured .mem-cta:hover{background:var(--r2)}
+.gym-hero-bg{filter:grayscale(100%) contrast(1.3) brightness(0.85)}
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="go('inicio')">
+    <img class="logo-mark" src="assets/ucc-logo-icon.png" alt="UCC"/>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="go('inicio')">Inicio</div>
+    <div class="nav-tab" onclick="go('envivo')">Streaming</div>
+    <div class="nav-tab" onclick="go('archivo')">Archivo</div>
+    <div class="nav-tab" onclick="go('tienda')">Tienda</div>
+    <div class="nav-tab" onclick="go('podcast')">Podcast</div>
+    <div class="nav-tab" onclick="go('gym')">Entrena con Nosotros</div>
+  </div>
+  <div class="nav-r">
+    <button class="cart-btn" onclick="toggleCart()" aria-label="Carrito">
+      <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zM17 18c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+      <span class="cart-badge zero" id="cartBadge">0</span>
+    </button>
+    <button class="nav-sub-btn" onclick="go('envivo')">Ver Ahora</button>
+  </div>
+</nav>
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Tu Carrito</h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">Tu carrito está vacío</div>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-subtotal-row">
+      <span class="cs-lbl">Subtotal</span>
+      <span class="cs-val" id="cartSubtotal">$0</span>
+    </div>
+    <button class="cart-checkout-btn">
+      Proceder al Pago
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+    </button>
+  </div>
+</div>
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-lbl">UCC 81 · Card</span>
+  <span class="ticker-sponsor" onclick="go('podcast')">
+    <span class="ticker-sponsor-dot"></span>
+    Cuotas por <strong>LAS ODDS</strong>
+  </span>
+  <div class="ticker-track">
+    <div class="ticker-inner">
+      <span class="tf">Rodríguez <span>vs</span> Martínez · Pesos Ligeros<span class="tf-odds">-155 / +130</span></span>
+      <span class="tf">Torres <span>vs</span> Guevara · Pesos Welter<span class="tf-odds">-120 / +100</span></span>
+      <span class="tf">Flores <span>vs</span> Reyes · Pesos Gallo<span class="tf-odds">-200 / +170</span></span>
+      <span class="tf">Castillo <span>vs</span> Núñez · Pesos Mosca<span class="tf-odds">-175 / +145</span></span>
+      <span class="tf">López <span>vs</span> Herrera · Pesos Medios<span class="tf-odds">-130 / +110</span></span>
+      <span class="tf">Rodríguez <span>vs</span> Martínez · Pesos Ligeros<span class="tf-odds">-155 / +130</span></span>
+      <span class="tf">Torres <span>vs</span> Guevara · Pesos Welter<span class="tf-odds">-120 / +100</span></span>
+      <span class="tf">Flores <span>vs</span> Reyes · Pesos Gallo<span class="tf-odds">-200 / +170</span></span>
+      <span class="tf">Castillo <span>vs</span> Núñez · Pesos Mosca<span class="tf-odds">-175 / +145</span></span>
+      <span class="tf">López <span>vs</span> Herrera · Pesos Medios<span class="tf-odds">-130 / +110</span></span>
+    </div>
+  </div>
+</div>
+<div class="page-wrap">
+<!-- ═══ INICIO ═══ -->
+<div class="page active" id="p-inicio">
+  <div class="hero">
+    <div class="hero-slides">
+      <div class="hero-slide active"></div>
+      <div class="hero-slide"></div>
+      <div class="hero-slide"></div>
+    </div>
+    <div class="hero-grad"></div>
+    <div class="hero-red-bar"></div>
+    <div class="hero-dots">
+      <div class="hero-dot active" onclick="setSlide(0)"></div>
+      <div class="hero-dot" onclick="setSlide(1)"></div>
+      <div class="hero-dot" onclick="setSlide(2)"></div>
+    </div>
+    <div class="hero-body">
+      <div class="hero-eyebrow">
+        <div class="live-dot"></div>
+        <span>La Promotora de MMA más Grande de Latinoamérica</span>
+      </div>
+      <h1>Ultimate<br><em>Combat</em><br>Challenge</h1>
+      <p class="hero-sub">25 Años de Artes Marciales Mixtas · Panamá & LATAM</p>
+      <div class="hero-btns">
+        <button class="btn-r" onclick="go('envivo')">
+          <svg width="12" height="12" viewBox="0 0 10 10" fill="#fff"><polygon points="1,0 10,5 1,10"/></svg>
+          Ver Ahora
+        </button>
+        <button class="btn-ghost" onclick="go('podcast')">Las Odds</button>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-val" data-count="25">0<em>+</em></div><div class="stat-lbl">Años de Trayectoria</div></div>
+      <div class="stat"><div class="stat-val" data-count="4">0<em></em></div><div class="stat-lbl">Eventos por Temporada</div></div>
+      <div class="stat"><div class="stat-val" data-count="5">0<em>K+</em></div><div class="stat-lbl">Vistas por Evento</div></div>
+      <div class="stat"><div class="stat-val" data-count="600">0<em>+</em></div><div class="stat-lbl">Asistentes por Evento</div></div>
+    </div>
+  </div>
+  <div class="ev-strip">
+    <div class="strip-head">
+      <h3>Próximos Eventos</h3>
+      <a onclick="go('archivo')">Ver Archivo Completo →</a>
+    </div>
+    <div class="ev-grid">
+      <div class="ev-card">
+        <img src="https://images.unsplash.com/photo-1545191050-96042d612b1f?w=700&q=85&auto=format&fit=crop" alt=""/>
+        <div class="ev-info">
+          <div class="ev-num">UCC 81</div>
+          <div class="ev-name">Noche de Campeones</div>
+          <div class="ev-date">12 Jul 2025 · Figali Convention Center</div>
+        </div>
+        <div class="ev-badge-next">Próximo</div>
+      </div>
+      <div class="ev-card">
+        <img src="https://images.unsplash.com/photo-1780476871385-311b94435524?w=700&q=85&auto=format&fit=crop" alt=""/>
+        <div class="ev-info">
+          <div class="ev-num">UCC 82</div>
+          <div class="ev-name">Hell in Cage 8</div>
+          <div class="ev-date">Sep 2025 · Ciudad de Panamá</div>
+        </div>
+      </div>
+      <div class="ev-card">
+        <img src="https://images.unsplash.com/photo-1575800605380-ca1d27744f2c?w=700&q=85&auto=format&fit=crop" alt=""/>
+        <div class="ev-info">
+          <div class="ev-num">UCC 83</div>
+          <div class="ev-name">Fantastic Fight Night 3</div>
+          <div class="ev-date">Nov 2025 · Ciudad de Panamá</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ═══ EN VIVO ═══ -->
+<div class="page" id="p-envivo">
+  <div class="live-hero">
+    <div class="live-hero-bg"></div>
+    <div class="live-hero-grad"></div>
+    <div class="live-hero-content">
+      <div class="badge-live">En Vivo</div>
+      <div class="live-title">UCC 81<br>Noche de<br>Campeones</div>
+      <div class="live-meta">Sáb 12 Jul · 8PM ET · Figali Convention Center · Televisión Nacional + Streaming</div>
+      <button class="btn-r">
+        <svg width="12" height="12" viewBox="0 0 10 10" fill="#fff"><polygon points="1,0 10,5 1,10"/></svg>
+        Ver el Evento
+      </button>
+    </div>
+  </div>
+  <div class="live-body">
+    <div class="section-h" style="margin-bottom:0">
+      <h3>Card Oficial — UCC 81</h3>
+      <span>5 Peleas · Sáb 12 Jul</span>
+    </div>
+    <div class="fight-row">
+      <div class="fight-wt">Pesos Ligeros<em>Estelar</em></div>
+      <div class="fight-fighters">
+        <div><div class="fn">Rodríguez, J.</div><div class="fr">12-2-0</div></div>
+        <div class="vs">VS</div>
+        <div><div class="fn">Martínez, R.</div><div class="fr">10-3-0</div></div>
+      </div>
+      <div class="fight-rounds">5 Rondas</div>
+    </div>
+    <div class="fight-row">
+      <div class="fight-wt">Pesos Welter</div>
+      <div class="fight-fighters">
+        <div><div class="fn">Torres, A.</div><div class="fr">8-1-0</div></div>
+        <div class="vs">VS</div>
+        <div><div class="fn">Guevara, M.</div><div class="fr">7-2-0</div></div>
+      </div>
+      <div class="fight-rounds">3 Rondas</div>
+    </div>
+    <div class="fight-row">
+      <div class="fight-wt">Pesos Gallo</div>
+      <div class="fight-fighters">
+        <div><div class="fn">Flores, C.</div><div class="fr">9-0-0</div></div>
+        <div class="vs">VS</div>
+        <div><div class="fn">Reyes, D.</div><div class="fr">6-2-1</div></div>
+      </div>
+      <div class="fight-rounds">3 Rondas</div>
+    </div>
+    <div class="fight-row">
+      <div class="fight-wt">Pesos Mosca</div>
+      <div class="fight-fighters">
+        <div><div class="fn">Castillo, F.</div><div class="fr">5-1-0</div></div>
+        <div class="vs">VS</div>
+        <div><div class="fn">Núñez, G.</div><div class="fr">4-2-0</div></div>
+      </div>
+      <div class="fight-rounds">3 Rondas</div>
+    </div>
+    <div class="fight-row">
+      <div class="fight-wt">Pesos Medios</div>
+      <div class="fight-fighters">
+        <div><div class="fn">López, H.</div><div class="fr">7-3-0</div></div>
+        <div class="vs">VS</div>
+        <div><div class="fn">Herrera, I.</div><div class="fr">6-1-0</div></div>
+      </div>
+      <div class="fight-rounds">3 Rondas</div>
+    </div>
+  </div>
+  <div class="plans-block">
+    <div class="section-h" style="margin-bottom:24px"><h3>Suscripciones</h3></div>
+    <div class="plans-3">
+      <div class="plan">
+        <div class="plan-tag">Gratis</div>
+        <div class="plan-name">Prelims</div>
+        <div class="plan-price"><sup>$</sup>0<sub>/mes</sub></div>
+        <hr>
+        <ul>
+          <li>Peleas preliminares en vivo</li>
+          <li>Clips y highlights</li>
+          <li>Noticias UCC</li>
+        </ul>
+        <button class="btn-ghost" style="display:block;text-align:center">Regístrate</button>
+      </div>
+      <div class="plan featured">
+        <div class="plan-tag">Más Popular</div>
+        <div class="plan-name">Campeón</div>
+        <div class="plan-price"><sup>$</sup>9<sub>.99/mes</sub></div>
+        <hr>
+        <ul>
+          <li>PPV en vivo ilimitado</li>
+          <li>Archivo completo 25 años</li>
+          <li>Contenido exclusivo</li>
+          <li>Sin anuncios</li>
+        </ul>
+        <button class="btn-r" style="display:block;text-align:center">Suscribirse</button>
+      </div>
+      <div class="plan">
+        <div class="plan-tag">Todo incluido</div>
+        <div class="plan-name">Elite</div>
+        <div class="plan-price"><sup>$</sup>19<sub>.99/mes</sub></div>
+        <hr>
+        <ul>
+          <li>Todo lo de Campeón</li>
+          <li>15% descuento en tienda</li>
+          <li>Acceso VIP a eventos</li>
+          <li>Merchandise exclusivo</li>
+        </ul>
+        <button class="btn-ghost" style="display:block;text-align:center">Suscribirse</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ═══ ARCHIVO ═══ -->
+<div class="page" id="p-archivo">
+  <!-- Hero: pick del mes -->
+  <div class="arc-hero">
+    <div class="arc-hero-bg"></div>
+    <div class="arc-hero-grad"></div>
+    <div class="arc-hero-content">
+      <span class="arc-hero-badge">Pick del Mes · Julio 2026</span>
+      <div class="arc-hero-title">UCC 80: Grandes<br>Combates</div>
+      <div class="arc-hero-meta">2024 · 2h 12m · <span>Finish por KO — Ronda 3</span></div>
+      <p class="arc-hero-desc">La noche que redefinió la categoría ligera. Curamos este evento para ti porque se parece a lo último que viste en Streaming — revive el nocaut completo, comentado por Las Odds.</p>
+      <div class="arc-hero-btns">
+        <button class="btn-r" onclick="openArchiveModal('UCC 80 — Grandes Combates','2024 · 2h 12m')">
+          <svg width="12" height="12" viewBox="0 0 10 10" fill="#fff"><polygon points="1,0 10,5 1,10"/></svg>
+          Ver Highlights
+        </button>
+        <button class="btn-ghost" onclick="openArchiveModal('UCC 80 — Grandes Combates','2024 · 2h 12m')">ⓘ Más Información</button>
+      </div>
+    </div>
+  </div>
+  <!-- Selección curada -->
+  <div class="arc-jump-row">
+    <button class="arc-chip" onclick="document.getElementById('rowParaTi').scrollIntoView({behavior:'smooth',block:'start'})">Para Ti</button>
+    <button class="arc-chip" onclick="document.getElementById('rowNocauts').scrollIntoView({behavior:'smooth',block:'start'})">Top Nocauts</button>
+    <button class="arc-chip" onclick="document.getElementById('rowSumisiones').scrollIntoView({behavior:'smooth',block:'start'})">Sumisiones</button>
+    <button class="arc-chip" onclick="document.getElementById('rowClasicos').scrollIntoView({behavior:'smooth',block:'start'})">Clásicos</button>
+  </div>
+  <!-- Row: Para Ti -->
+  <div class="arc-row" id="rowParaTi">
+    <div class="arc-row-head"><h3>Recomendado Para Ti</h3><span>Basado en lo que sigues</span></div>
+    <div class="arc-row-track-wrap">
+      <button class="arc-row-nav prev" onclick="scrollRow(this,-1)">‹</button>
+      <div class="arc-row-track">
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 80 — Grandes Combates','2024 · 2h 12m')"><img src="https://images.unsplash.com/photo-1545191050-96042d612b1f?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 80</div><div class="arc-rc-name">Grandes Combates</div><div class="arc-rc-dur">2024 · 2h 12m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 79 — Hell in Cage 7','2024 · 1h 58m')"><img src="https://images.unsplash.com/photo-1777305628889-13832df3e542?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 79</div><div class="arc-rc-name">Hell in Cage 7</div><div class="arc-rc-dur">2024 · 1h 58m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 77 — El Torneo','2023 · 1h 44m')"><img src="https://images.unsplash.com/photo-1545191050-4228dc5d7ddc?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 77</div><div class="arc-rc-name">El Torneo</div><div class="arc-rc-dur">2023 · 1h 44m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 53 — Sangre & Gloria','2022 · 2h 02m')"><img src="https://images.unsplash.com/photo-1738982518593-316b17348c30?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 53</div><div class="arc-rc-name">Sangre & Gloria</div><div class="arc-rc-dur">2022 · 2h 02m</div></div></div>
+      </div>
+      <button class="arc-row-nav next" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </div>
+  <!-- Row: Top Nocauts -->
+  <div class="arc-row" id="rowNocauts">
+    <div class="arc-row-head"><h3>Top Nocauts</h3><span>Compilación curada</span></div>
+    <div class="arc-row-track-wrap">
+      <button class="arc-row-nav prev" onclick="scrollRow(this,-1)">‹</button>
+      <div class="arc-row-track">
+        <div class="arc-rcard" onclick="openArchiveModal('Best Of — Top KOs 25 Años','Compilación · 52m')"><img src="https://images.unsplash.com/photo-1680022702604-292f21514497?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">Best Of</div><div class="arc-rc-name">Top KOs — 25 Años</div><div class="arc-rc-dur">Compilación · 52m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 80 — Grandes Combates','2024 · 2h 12m')"><img src="https://images.unsplash.com/photo-1545191050-96042d612b1f?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 80</div><div class="arc-rc-name">Grandes Combates</div><div class="arc-rc-dur">2024 · 2h 12m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 78 — Noche de Guerreros','2023 · 2h 05m')"><img src="https://images.unsplash.com/photo-1545191050-4228dc5d7ddc?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 78</div><div class="arc-rc-name">Noche de Guerreros</div><div class="arc-rc-dur">2023 · 2h 05m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 53 — Sangre & Gloria','2022 · 2h 02m')"><img src="https://images.unsplash.com/photo-1575800605380-ca1d27744f2c?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 53</div><div class="arc-rc-name">Sangre & Gloria</div><div class="arc-rc-dur">2022 · 2h 02m</div></div></div>
+      </div>
+      <button class="arc-row-nav next" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </div>
+  <!-- Row: Sumisiones -->
+  <div class="arc-row" id="rowSumisiones">
+    <div class="arc-row-head"><h3>Sumisiones Inolvidables</h3><span>Compilación curada</span></div>
+    <div class="arc-row-track-wrap">
+      <button class="arc-row-nav prev" onclick="scrollRow(this,-1)">‹</button>
+      <div class="arc-row-track">
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 79 — Hell in Cage 7','2024 · 1h 58m')"><img src="https://images.unsplash.com/photo-1777305628889-13832df3e542?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 79</div><div class="arc-rc-name">Hell in Cage 7</div><div class="arc-rc-dur">2024 · 1h 58m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 76 — Fantasmas del Ring','2023 · 1h 52m')"><img src="https://images.unsplash.com/photo-1780476871385-311b94435524?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 76</div><div class="arc-rc-name">Fantasmas del Ring</div><div class="arc-rc-dur">2023 · 1h 52m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 77 — El Torneo','2023 · 1h 44m')"><img src="https://images.unsplash.com/photo-1545191488-c02b3c74e71c?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 77</div><div class="arc-rc-name">El Torneo</div><div class="arc-rc-dur">2023 · 1h 44m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 49 — El Regreso','2021 · 1h 55m')"><img src="https://images.unsplash.com/photo-1607702713064-0143212236ae?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 49</div><div class="arc-rc-name">El Regreso</div><div class="arc-rc-dur">2021 · 1h 55m</div></div></div>
+      </div>
+      <button class="arc-row-nav next" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </div>
+  <!-- Row: Clásicos -->
+  <div class="arc-row" id="rowClasicos" style="padding-bottom:52px">
+    <div class="arc-row-head"><h3>Clásicos UCC</h3><span>25 años de trayectoria</span></div>
+    <div class="arc-row-track-wrap">
+      <button class="arc-row-nav prev" onclick="scrollRow(this,-1)">‹</button>
+      <div class="arc-row-track">
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 75 — La Revancha','2022 · 2h 10m')"><img src="https://images.unsplash.com/photo-1611077479643-5b3c01381f9e?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 75</div><div class="arc-rc-name">La Revancha</div><div class="arc-rc-dur">2022 · 2h 10m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 60 — El Gran Retorno','2022 · 1h 48m')"><img src="https://images.unsplash.com/photo-1607702713064-0143212236ae?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 60</div><div class="arc-rc-name">El Gran Retorno</div><div class="arc-rc-dur">2022 · 1h 48m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('UCC 49 — El Regreso','2021 · 1h 55m')"><img src="https://images.unsplash.com/photo-1575800605380-ca1d27744f2c?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">UCC 49</div><div class="arc-rc-name">El Regreso</div><div class="arc-rc-dur">2021 · 1h 55m</div></div></div>
+        <div class="arc-rcard" onclick="openArchiveModal('Best Of — Top KOs 25 Años','Compilación · 52m')"><img src="https://images.unsplash.com/photo-1680022702604-292f21514497?w=500&q=85&auto=format&fit=crop" alt=""/><span class="arc-yt-tag"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205 31.247 31.247 0 0 0 .005 12a31.247 31.247 0 0 0 .522 5.795 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088A31.247 31.247 0 0 0 23.995 12a31.247 31.247 0 0 0-.5-5.795zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</span><div class="arc-rcard-hover"><div class="arc-play-circle"><svg viewBox="0 0 10 10"><polygon points="1,0 10,5 1,10"/></svg></div></div><div class="arc-rcard-info"><div class="arc-rc-num">Best Of</div><div class="arc-rc-name">Top KOs — 25 Años</div><div class="arc-rc-dur">Compilación · 52m</div></div></div>
+      </div>
+      <button class="arc-row-nav next" onclick="scrollRow(this,1)">›</button>
+    </div>
+  </div>
+  <!-- Modal de video -->
+  <div class="arc-modal" id="arcModal">
+    <div class="arc-modal-backdrop" onclick="closeArchiveModal()"></div>
+    <div class="arc-modal-box">
+      <button class="arc-modal-close" onclick="closeArchiveModal()">✕</button>
+      <div class="arc-modal-video"><iframe id="arcModalIframe" src="" title="UCC Archivo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+      <div class="arc-modal-info">
+        <div class="arc-modal-title" id="arcModalTitle"></div>
+        <div class="arc-modal-meta" id="arcModalMeta"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ═══ TIENDA ═══ -->
+<div class="page" id="p-tienda">
+  <div class="shop-hero">
+    <div class="shop-hero-bg"></div>
+    <div class="shop-hero-grad"></div>
+    <div class="shop-hero-content">
+      <div>
+        <span class="shop-eyebrow">Colección Oficial</span>
+        <div class="shop-h1">Tienda<br>UCC</div>
+      </div>
+      <button class="btn-r">Ver Todo</button>
+    </div>
+  </div>
+  <div class="shop-body">
+    <div class="shop-filter-bar">
+      <div class="shop-filter-left">
+        <span class="shop-filter-lbl">Filtrar:</span>
+        <button class="fselect" onclick="this.classList.toggle('on')">Disponibilidad <span class="fs-chev">▾</span></button>
+        <button class="fselect" onclick="this.classList.toggle('on')">Precio <span class="fs-chev">▾</span></button>
+        <button class="fselect" onclick="this.classList.toggle('on')">Ofertas Especiales <span class="fs-chev">▾</span></button>
+      </div>
+      <div class="shop-filter-right">
+        <span class="shop-count" id="shopCount">3 productos</span>
+      </div>
+    </div>
+    <div class="cats">
+      <button class="cbtn on">Todo</button>
+      <button class="cbtn">Camisetas</button>
+      <button class="cbtn">Guantes</button>
+      <button class="cbtn">Rashguards</button>
+      <button class="cbtn">Gorras</button>
+      <button class="cbtn">Suéteres</button>
+      <button class="cbtn">Equipo</button>
+      <button class="cbtn">Coleccionables</button>
+      <button class="cbtn">Ofertas</button>
+      <button class="cbtn">25 Aniversario</button>
+    </div>
+    <div class="prod-grid" id="prodGrid">
+      <div class="prod" data-cat="guantes|equipo">
+        <div class="prod-thumb">
+          <img src="assets/mma-gloves.jpg" alt=""/>
+        </div>
+        <div class="prod-info">
+          <div class="prod-cat">Equipo</div>
+          <div class="prod-name">Guantes Pro UCC Training</div>
+          <div class="prod-row"><div class="prod-price">$79</div><button class="add-btn">+ Añadir</button></div>
+        </div>
+      </div>
+      <div class="prod" data-cat="rashguards|equipo">
+        <div class="prod-thumb">
+          <img src="assets/rashguard.jpg" alt=""/>
+        </div>
+        <div class="prod-info">
+          <div class="prod-cat">Equipo</div>
+          <div class="prod-name">Rashguard UCC Competencia</div>
+          <div class="prod-row"><div class="prod-price">$44</div><button class="add-btn">+ Añadir</button></div>
+        </div>
+      </div>
+      <div class="prod" data-cat="gorras|coleccionables">
+        <div class="prod-thumb">
+          <img src="assets/gorra-danner.jpg" alt=""/>
+          <div class="prod-badge">Limitado</div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-cat">Coleccionables</div>
+          <div class="prod-name">Gorra UCC Edición Especial</div>
+          <div class="prod-row"><div class="prod-price">$28</div><button class="add-btn">+ Añadir</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="shop-empty" id="shopEmptyMsg">No hay productos en esta categoría por el momento</div>
+  </div>
+</div>
+<!-- ═══ PODCAST CONSOLE ═══ -->
+<!-- ══════════════════════════════════════════
+     PAGE: GYM
+══════════════════════════════════════════ -->
+<div class="page" id="p-gym">
+  <!-- Hero -->
+  <div class="gym-hero">
+    <div class="gym-hero-bg"></div>
+    <div class="gym-hero-overlay"></div>
+    <div class="gym-hero-content">
+      <div class="gym-eyebrow">UCC Fight Academy · Panamá</div>
+      <div class="gym-h1">ENTRENA<br>COMO UN<br>CAMPEÓN</div>
+      <div class="gym-sub">25 años formando peleadores. Clases para todos los niveles — desde principiantes hasta competidores de élite.</div>
+    </div>
+  </div>
+  <!-- Schedule -->
+  <div class="gym-section">
+    <div class="gym-section-hd">
+      <div class="gym-section-title">Horario Semanal</div>
+      <div class="gym-section-tag">Semana Actual · Julio 2026</div>
+    </div>
+    <div class="week-table-wrap">
+      <table class="week-table">
+        <thead>
+          <tr>
+            <th class="wt-th-time"></th>
+            <th>LUN</th>
+            <th>MAR</th>
+            <th>MIÉ</th>
+            <th>JUE</th>
+            <th>VIE</th>
+            <th>SÁB</th>
+            <th>DOM</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="wt-time">06:00</td>
+            <td class="d-mma"><span class="wt-disc-tag">MMA</span><span class="wt-cls-name">Fundamentals</span></td>
+            <td class="wt-empty"></td>
+            <td class="d-mma"><span class="wt-disc-tag">MMA</span><span class="wt-cls-name">Fundamentals</span></td>
+            <td class="wt-empty"></td>
+            <td class="d-mma"><span class="wt-disc-tag">MMA</span><span class="wt-cls-name">Fundamentals</span></td>
+            <td class="wt-empty"></td>
+            <td class="wt-empty"></td>
+          </tr>
+          <tr>
+            <td class="wt-time">09:00</td>
+            <td class="wt-empty"></td>
+            <td class="d-bjj"><span class="wt-disc-tag">BJJ</span><span class="wt-cls-name">Competidores</span></td>
+            <td class="wt-empty"></td>
+            <td class="d-bjj"><span class="wt-disc-tag">BJJ</span><span class="wt-cls-name">Competidores</span></td>
+            <td class="wt-empty"></td>
+            <td class="d-bjj"><span class="wt-disc-tag">BJJ</span><span class="wt-cls-name">Open Mat</span></td>
+            <td class="wt-empty"></td>
+          </tr>
+          <tr>
+            <td class="wt-time">10:30</td>
+            <td class="wt-empty"></td>
+            <td class="wt-empty"></td>
+            <td class="wt-empty"></td>
+            <td class="wt-empty"></td>
+            <td class="wt-empty"></td>
+            <td class="d-spar"><span class="wt-disc-tag">Sparring</span><span class="wt-cls-name">Controlado</span></td>
+            <td class="d-spar"><span class="wt-disc-tag">Sparring</span><span class="wt-cls-name">Controlado</span></td>
+          </tr>
+          <tr>
+            <td class="wt-time">11:00</td>
+            <td class="d-mt"><span class="wt-disc-tag">Muay Thai</span><span class="wt-cls-name">Básico</span></td>
+            <td class="d-mt"><span class="wt-disc-tag">Muay Thai</span><span class="wt-cls-name">Básico</span></td>
+            <td class="d-mt"><span class="wt-disc-tag">Muay Thai</span><span class="wt-cls-name">Básico</span></td>
+            <td class="d-mt"><span class="wt-disc-tag">Muay Thai</span><span class="wt-cls-name">Básico</span></td>
+            <td class="d-mt"><span class="wt-disc-tag">Muay Thai</span><span class="wt-cls-name">Básico</span></td>
+            <td class="wt-empty"></td>
+            <td class="wt-empty"></td>
+          </tr>
+          <tr>
+            <td class="wt-time">17:30</td>
+            <td class="d-nogi"><span class="wt-disc-tag">No-Gi BJJ</span><span class="wt-cls-name">Avanzado</span></td>
+            <td class="wt-empty"></td>
+            <td class="d-nogi"><span class="wt-disc-tag">No-Gi BJJ</span><span class="wt-cls-name">Avanzado</span></td>
+            <td class="wt-empty"></td>
+            <td class="d-nogi"><span class="wt-disc-tag">No-Gi BJJ</span><span class="wt-cls-name">Avanzado</span></td>
+            <td class="wt-empty"></td>
+            <td class="wt-empty"></td>
+          </tr>
+          <tr>
+            <td class="wt-time">18:30</td>
+            <td class="wt-empty"></td>
+            <td class="d-mma"><span class="wt-disc-tag">MMA</span><span class="wt-cls-name">Avanzado</span></td>
+            <td class="wt-empty"></td>
+            <td class="d-mma"><span class="wt-disc-tag">MMA</span><span class="wt-cls-name">Avanzado</span></td>
+            <td class="wt-empty"></td>
+            <td class="d-mma"><span class="wt-disc-tag">MMA</span><span class="wt-cls-name">Avanzado</span></td>
+            <td class="wt-empty"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Únete a UCC -->
+  <div class="gym-section" style="padding-bottom:60px">
+    <div class="gym-section-hd">
+      <div class="gym-section-title">Únete a UCC</div>
+      <div class="gym-section-tag">Profesionales & Amateur</div>
+    </div>
+    <div class="join-grid">
+      <div class="join-card">
+        <div class="join-tag">Peleadores Profesionales</div>
+        <div class="join-title">Compite en el Octágono</div>
+        <p class="join-desc">¿Tienes récord profesional? Aplica para pelear en la próxima cartelera de UCC o forma parte permanente de nuestro roster de atletas.</p>
+        <ul class="join-list">
+          <li>Evaluación de expediente y récord</li>
+          <li>Prueba técnica con nuestros coaches</li>
+          <li>Contrato por evento o roster fijo</li>
+        </ul>
+        <button class="btn-r">Aplicar Como Peleador →</button>
+      </div>
+      <div class="join-card amateur">
+        <div class="join-tag">Atletas Amateur</div>
+        <div class="join-title">Empieza tu Camino</div>
+        <p class="join-desc">Sin experiencia previa, sin problema. Entrena con el mismo equipo de coaches que forma a los peleadores de UCC.</p>
+        <ul class="join-list">
+          <li>Clase de prueba gratis</li>
+          <li>Planes mensuales flexibles</li>
+          <li>Todos los niveles bienvenidos</li>
+        </ul>
+        <button class="btn-ghost">Agenda tu Clase Gratis →</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="page" id="p-podcast">
+  <div class="console">
+    <!-- ══ PANEL A: PLAYER ══ -->
+    <div class="panel-player">
+      <!-- Episode Header -->
+      <div class="pl-header">
+        <div class="pl-art">
+          <img src="https://images.unsplash.com/photo-1680022702604-292f21514497?w=300&q=80&auto=format&fit=crop" alt="Las Odds"/>
+          <div class="pl-art-lbl">LAS<br>ODDS</div>
+        </div>
+        <div>
+          <span class="pl-show-badge">🎙 Podcast Oficial · UCC Panama</span>
+          <div class="pl-ep-title">UCC 81 — Spot Bets:<br>Tipo de Finish, Rounds & Props</div>
+          <div class="pl-ep-num">Ep. 47 &nbsp;·&nbsp; 1h 05min &nbsp;·&nbsp; Julio 10, 2025</div>
+          <div class="pl-plat-row">
+            <button class="pl-plat">
+              <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+              Spotify
+            </button>
+            <button class="pl-plat">
+              <svg viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+              Apple
+            </button>
+            <button class="pl-plat">
+              <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+              YouTube
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Controls & Scrub -->
+      <div class="player-ctrl-block">
+        <!-- Timestamp markers -->
+        <div class="ts-markers-row" id="tsMarkersRow"></div>
+        <!-- Scrub track -->
+        <div class="scrub-track" id="scrubTrack">
+          <div class="scrub-fill" id="scrubFill" style="width:0%"></div>
+          <div class="scrub-thumb" id="scrubThumb" style="left:0%"></div>
+        </div>
+        <div class="scrub-times">
+          <span id="curTime">0:00</span>
+          <span>1:05:00</span>
+        </div>
+        <!-- Playback buttons -->
+        <div class="ctrl-row">
+          <button class="ctrl-btn" onclick="seekRel(-15)" title="-15s">
+            <svg viewBox="0 0 24 24"><path d="M12.5 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7V3z"/><path d="M12.5 3V0L8 4.5l4.5 4.5V6"/><text x="7" y="16" font-size="6" fill="currentColor" font-family="sans-serif">15</text></svg>
+          </button>
+          <button class="ctrl-play" id="playBtn" onclick="togglePlay()">
+            <svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="ic-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6zm8-14v14h4V5z"/></svg>
+          </button>
+          <button class="ctrl-btn" onclick="seekRel(15)" title="+15s">
+            <svg viewBox="0 0 24 24"><path d="M11.5 3a9 9 0 1 1-9 9h2a7 7 0 1 0 7-7V3z"/><path d="M11.5 3V0L16 4.5 11.5 9V6"/><text x="7" y="16" font-size="6" fill="currentColor" font-family="sans-serif">15</text></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Episode Description -->
+      <div class="ep-desc-wrap">
+        <div class="ep-sect-lbl">Sobre Este Episodio</div>
+        <div class="ep-desc-text">
+          Pelea por pelea, analizamos el tipo de finish más probable, la ronda en que cae y si va a distancia. Todos los Spot Bets del UCC 81 — Noche de Campeones: valor real en las props, historial de cada peleador por método de victoria, y los picks que no vas a escuchar en ningún otro lado.
+        </div>
+      </div>
+      <!-- Mini Episode List -->
+      <div class="ep-mini-wrap">
+        <div class="ep-sect-lbl">Episodios Recientes</div>
+        <div class="ep-mini-row" onclick="loadEp(46)">
+          <div class="ep-mini-n">46</div>
+          <div class="ep-mini-info">
+            <div class="ep-mini-title">UCC 80 — Post-Fight: Lo que dijeron los momios</div>
+            <div class="ep-mini-dur">58min</div>
+          </div>
+          <div class="ep-mini-ico"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="ep-mini-row" onclick="loadEp(45)">
+          <div class="ep-mini-n">45</div>
+          <div class="ep-mini-info">
+            <div class="ep-mini-title">Guía Completa: Cómo leer momios americanos</div>
+            <div class="ep-mini-dur">44min</div>
+          </div>
+          <div class="ep-mini-ico"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="ep-mini-row" onclick="loadEp(44)">
+          <div class="ep-mini-n">44</div>
+          <div class="ep-mini-info">
+            <div class="ep-mini-title">Top 5 Upsets del 2025 en Artes Marciales</div>
+            <div class="ep-mini-dur">51min</div>
+          </div>
+          <div class="ep-mini-ico"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="ep-mini-row" onclick="loadEp(43)">
+          <div class="ep-mini-n">43</div>
+          <div class="ep-mini-info">
+            <div class="ep-mini-title">Especial: Reglas del Grappling y su impacto en las líneas</div>
+            <div class="ep-mini-dur">1h 02min</div>
+          </div>
+          <div class="ep-mini-ico"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <!-- ══ PANEL B: ACTION / ODDS ══ -->
+    <div class="panel-action">
+      <div class="action-top">
+        <div class="now-row">
+          <div class="now-dot"></div>
+          <span class="now-lbl">Ahora Discutiendo</span>
+        </div>
+        <div class="action-fight-name" id="actionFightName">Rodríguez vs Martínez</div>
+        <div class="action-fight-cat" id="actionFightCat">Pesos Ligeros · 5 Rondas · Pelea Estelar</div>
+      </div>
+      <div class="fight-tabs-row" id="fightTabsRow"></div>
+      <div class="odds-area" id="oddsArea"></div>
+      <!-- LIVE TRENDS -->
+      <div class="trend-panel" id="trendPanel">
+        <div class="trend-handle" onclick="toggleTrends()">
+          <div class="trend-hl">
+            <span class="trend-live-dot"></span>
+            <span class="trend-title">Tendencias en Vivo</span>
+          </div>
+          <span class="trend-chevron">▲</span>
+        </div>
+        <div class="trend-body">
+          <div class="trend-section-lbl">🔥 Más Apostado</div>
+          <div id="trendPopularList"></div>
+          <div class="trend-section-lbl">💎 Mayor Potencial</div>
+          <div id="trendValueList"></div>
+          <div class="trend-micro">Cuotas ilustrativas en base a la afición · Apuestas gestionadas por nuestro <strong>partner oficial</strong>, no en ucclatam.com</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /page-wrap -->
+<script>
+// ── Page navigation
+const PAGES = {inicio:'p-inicio',envivo:'p-envivo',archivo:'p-archivo',tienda:'p-tienda',gym:'p-gym',podcast:'p-podcast'};
+const TABS  = ['inicio','envivo','archivo','tienda','podcast','gym'];
+const tabs  = document.querySelectorAll('.nav-tab');
+function go(id){
+  Object.values(PAGES).forEach(p=>document.getElementById(p).classList.remove('active'));
+  document.getElementById(p=PAGES[id]).classList.remove('active');
+  document.getElementById(PAGES[id]).classList.add('active');
+  document.getElementById(PAGES[id]).scrollTop=0;
+  tabs.forEach(t=>t.classList.remove('active'));
+  const i=TABS.indexOf(id);if(i>-1)tabs[i].classList.add('active');
+}
+// ── Hero carousel
+let cur=0;
+const slides=document.querySelectorAll('.hero-slide');
+const dots=document.querySelectorAll('.hero-dot');
+function setSlide(n){
+  slides[cur].classList.remove('active');dots[cur].classList.remove('active');
+  cur=n;
+  slides[cur].classList.add('active');dots[cur].classList.add('active');
+}
+setInterval(()=>setSlide((cur+1)%slides.length),5000);
+// ── Counter animation
+function animateCounters(){
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=+el.dataset.count;
+    const suffix=el.querySelector('em')?.outerHTML||'';
+    let start=0,dur=1400,step=Math.ceil(target/60);
+    const t=setInterval(()=>{
+      start=Math.min(start+step,target);
+      el.innerHTML=start+suffix;
+      if(start>=target)clearInterval(t);
+    },dur/60);
+  });
+}
+setTimeout(animateCounters,400);
+// ══════════════════════════════════════════════
+//  ARCHIVO — Netflix-style rows + video modal
+// ══════════════════════════════════════════════
+const ARC_YT_PLACEHOLDER='jNQXAC9IVRw'; // demo placeholder — swap per-fight real YouTube IDs when available
+function openArchiveModal(title,meta){
+  document.getElementById('arcModalIframe').src='https://www.youtube.com/embed/'+ARC_YT_PLACEHOLDER+'?autoplay=1&rel=0';
+  document.getElementById('arcModalTitle').textContent=title;
+  document.getElementById('arcModalMeta').textContent=meta;
+  document.getElementById('arcModal').classList.add('open');
+}
+function closeArchiveModal(){
+  document.getElementById('arcModal').classList.remove('open');
+  document.getElementById('arcModalIframe').src='';
+}
+function scrollRow(btn,dir){
+  const track=btn.parentElement.querySelector('.arc-row-track');
+  track.scrollBy({left:dir*560,behavior:'smooth'});
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeArchiveModal();});
+// ── Tienda category filter (functional)
+document.querySelectorAll('.cats .cbtn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.cats .cbtn').forEach(x=>x.classList.remove('on'));
+    this.classList.add('on');
+    const key=this.textContent.trim().toLowerCase().replace(/\s+/g,'');
+    let visible=0;
+    document.querySelectorAll('.prod-grid .prod').forEach(p=>{
+      if(key==='todo'){
+        p.style.display='';visible++;
+      } else {
+        const cats=(p.dataset.cat||'').split('|');
+        const match=cats.includes(key);
+        p.style.display=match?'':'none';
+        if(match)visible++;
+      }
+    });
+    const countEl=document.getElementById('shopCount');
+    if(countEl)countEl.textContent=visible+(visible===1?' producto':' productos');
+    const emptyEl=document.getElementById('shopEmptyMsg');
+    const gridEl=document.getElementById('prodGrid');
+    if(emptyEl&&gridEl){
+      emptyEl.style.display=visible===0?'block':'none';
+      gridEl.style.display=visible===0?'none':'';
+    }
+  });
+});
+// ══════════════════════════════════════════════
+//  CART SYSTEM
+// ══════════════════════════════════════════════
+let cart = []; // [{name, price, qty}]
+function fmtMoney(n){ return '$'+n.toFixed(2).replace(/\.00$/,''); }
+function addToCart(name, price){
+  const existing = cart.find(i=>i.name===name);
+  if(existing){ existing.qty += 1; }
+  else{ cart.push({name, price, qty:1}); }
+  renderCart();
+  openCart();
+}
+function changeQty(name, delta){
+  const item = cart.find(i=>i.name===name);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0){ cart = cart.filter(i=>i.name!==name); }
+  renderCart();
+}
+function removeFromCart(name){
+  cart = cart.filter(i=>i.name!==name);
+  renderCart();
+}
+function renderCart(){
+  const badge = document.getElementById('cartBadge');
+  const itemsEl = document.getElementById('cartItems');
+  const subtotalEl = document.getElementById('cartSubtotal');
+  const count = cart.reduce((sum,i)=>sum+i.qty,0);
+  badge.textContent = count;
+  badge.className = 'cart-badge'+(count===0?' zero':'');
+  if(cart.length===0){
+    itemsEl.innerHTML = '<div class="cart-empty">Tu carrito está vacío</div>';
+    subtotalEl.textContent = '$0';
+    return;
+  }
+  itemsEl.innerHTML = cart.map(item=>`
+    <div class="cart-item">
+      <div>
+        <div class="ci-name">${item.name}</div>
+        <div class="ci-qty-row">
+          <button class="ci-qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}',-1)">−</button>
+          <span class="ci-qty-val">${item.qty}</span>
+          <button class="ci-qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}',1)">+</button>
+        </div>
+      </div>
+      <div class="ci-right">
+        <span class="ci-price">${fmtMoney(item.price*item.qty)}</span>
+        <button class="ci-remove" onclick="removeFromCart('${item.name.replace(/'/g,"\\'")}')">Eliminar</button>
+      </div>
+    </div>
+  `).join('');
+  const subtotal = cart.reduce((sum,i)=>sum+i.price*i.qty,0);
+  subtotalEl.textContent = fmtMoney(subtotal);
+}
+function toggleCart(){
+  document.getElementById('cartDrawer').classList.toggle('open');
+}
+function openCart(){
+  document.getElementById('cartDrawer').classList.add('open');
+}
+// Wire add-to-cart buttons
+document.querySelectorAll('.add-btn').forEach(btn=>{
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    const prod = this.closest('.prod');
+    const name = prod.querySelector('.prod-name').textContent.trim();
+    const priceText = prod.querySelector('.prod-price').childNodes[0].textContent.trim();
+    const price = parseFloat(priceText.replace('$',''));
+    addToCart(name, price);
+  });
+});
+renderCart();
+// ══════════════════════════════════════════════
+//  PODCAST CONSOLE — LAS ODDS ENGINE
+// ══════════════════════════════════════════════
+// ── Fight data — Spot Bets (tipo de finish)
+const FIGHTS = [
+  {
+    id:'f5',label:'Estelar',name:'Rodríguez vs Martínez',
+    cat:'Pesos Ligeros · 5 Rondas · Pelea Estelar',ts:85,
+    spotBets:[
+      {cat:'Método de Victoria',opts:[
+        {label:'KO / TKO',note:'Golpe o parada arbitral',odds:-140},
+        {label:'Sumisión',note:'Llave o estrangulación',odds:+320},
+        {label:'Decisión',note:'Va las 5 rondas',odds:+190},
+      ]},
+      {cat:'Ronda del Finish',opts:[
+        {label:'Ronda 1',note:'Antes del gong R2',odds:+250},
+        {label:'Rondas 2–3',note:'Mitad del fight',odds:+155},
+        {label:'Rondas 4–5',note:'Finish tardío',odds:+300},
+      ]},
+      {cat:'¿Va a Distancia?',opts:[
+        {label:'No va',note:'Algún finish antes de R5',odds:-230},
+        {label:'Sí va',note:'5 rondas completas',odds:+185},
+      ]},
+    ]
+  },
+  {
+    id:'f4',label:'Co-Estelar',name:'López vs Herrera',
+    cat:'Pesos Welter · 3 Rondas · Co-Estelar',ts:65,
+    spotBets:[
+      {cat:'Método de Victoria',opts:[
+        {label:'KO / TKO',note:'Golpe o parada',odds:+110},
+        {label:'Sumisión',note:'Llave o estrangulación',odds:+280},
+        {label:'Decisión',note:'Va las 3 rondas',odds:-145},
+      ]},
+      {cat:'Ronda del Finish',opts:[
+        {label:'Ronda 1',note:'Finish temprano',odds:+350},
+        {label:'Ronda 2',note:'Clímax del fight',odds:+290},
+        {label:'Ronda 3',note:'Finish tardío',odds:-120},
+      ]},
+      {cat:'¿Va a Distancia?',opts:[
+        {label:'No va',note:'Finish en alguna ronda',odds:+135},
+        {label:'Sí va',note:'3 rondas completas',odds:-165},
+      ]},
+    ]
+  },
+  {
+    id:'f3',label:'Pelea 3',name:'Torres vs Guevara',
+    cat:'Pesos Medianos · 3 Rondas',ts:44,
+    spotBets:[
+      {cat:'Método de Victoria',opts:[
+        {label:'KO / TKO',note:'Potencia pura',odds:-115},
+        {label:'Sumisión',note:'Historial en grappling',odds:+175},
+        {label:'Decisión',note:'Guerra de 3 rondas',odds:+220},
+      ]},
+      {cat:'Ronda del Finish',opts:[
+        {label:'Ronda 1',note:'Explosión inicial',odds:+200},
+        {label:'Ronda 2',note:'Punto de quiebre',odds:+175},
+        {label:'Ronda 3',note:'Finish cuando hay cansancio',odds:+210},
+      ]},
+      {cat:'¿Va a Distancia?',opts:[
+        {label:'No va',note:'Finish esperado',odds:-140},
+        {label:'Sí va',note:'3 rondas duras',odds:+110},
+      ]},
+    ]
+  },
+  {
+    id:'f2',label:'Pelea 2',name:'Flores vs Reyes',
+    cat:'Pesos Mosca · 3 Rondas',ts:28,
+    spotBets:[
+      {cat:'Método de Victoria',opts:[
+        {label:'KO / TKO',note:'Improbable en mosca',odds:+240},
+        {label:'Sumisión',note:'Flores tiene el grappling',odds:+140},
+        {label:'Decisión',note:'Clase más alta',odds:-185},
+      ]},
+      {cat:'Ronda del Finish',opts:[
+        {label:'Ronda 1',note:'Arrancada fuerte',odds:+400},
+        {label:'Ronda 2',note:'Cuando baja el ritmo',odds:+350},
+        {label:'Ronda 3',note:'Finish al límite',odds:+180},
+      ]},
+      {cat:'¿Va a Distancia?',opts:[
+        {label:'No va',note:'Algún finish',odds:+120},
+        {label:'Sí va',note:'Pelea de técnica',odds:-150},
+      ]},
+    ]
+  },
+  {
+    id:'f1',label:'Pelea 1',name:'Castillo vs Núñez',
+    cat:'Pesos Ligeros · 3 Rondas · Debut',ts:13,
+    spotBets:[
+      {cat:'Método de Victoria',opts:[
+        {label:'KO / TKO',note:'Prospecto de poder',odds:-155},
+        {label:'Sumisión',note:'Débil en grappling',odds:+280},
+        {label:'Decisión',note:'Si Núñez sobrevive R1',odds:+310},
+      ]},
+      {cat:'Ronda del Finish',opts:[
+        {label:'Ronda 1',note:'Castillo arranca fuerte',odds:-120},
+        {label:'Ronda 2',note:'Si no cayó en R1',odds:+280},
+        {label:'Ronda 3',note:'Poco probable',odds:+450},
+      ]},
+      {cat:'¿Va a Distancia?',opts:[
+        {label:'No va',note:'Pelea de potencia pura',odds:-220},
+        {label:'Sí va',note:'Núñez aguanta el tempo',odds:+175},
+      ]},
+    ]
+  }
+];
+// ── Player state
+let isPlaying=false;
+let podPct=0;      // 0–100
+let podTimer=null;
+let activeFight=0; // index in FIGHTS
+let trendsOpen=false;
+// ── Format odds
+function fmtOdds(o){return o>0?'+'+o:''+o}
+// ── Implied probability from American odds (drives the "most backed" bars)
+function impliedProb(odds){
+  return odds<0 ? (-odds)/((-odds)+100)*100 : 100/(odds+100)*100;
+}
+// ── Approx payout multiplier from American odds (drives the "highest potential" tags)
+function payoutMult(odds){
+  return odds>0 ? (odds/100)+1 : (100/Math.abs(odds))+1;
+}
+// ── Build fight tabs
+function buildTabs(){
+  const row=document.getElementById('fightTabsRow');
+  row.innerHTML='';
+  FIGHTS.slice().reverse().forEach((f,i)=>{
+    const real=FIGHTS.length-1-i;
+    const btn=document.createElement('div');
+    btn.className='ftab'+(real===activeFight?' on':'');
+    btn.textContent=f.label;
+    btn.onclick=()=>selectFight(real);
+    row.appendChild(btn);
+  });
+}
+// ── Build Spot Bet cards for current fight (display-only — no bets are placed on this site)
+function buildOdds(){
+  const f=FIGHTS[activeFight];
+  document.getElementById('actionFightName').textContent=f.name;
+  document.getElementById('actionFightCat').textContent=f.cat;
+  const area=document.getElementById('oddsArea');
+  let html='';
+  const popPicks=[],valuePicks=[];
+  f.spotBets.forEach(section=>{
+    const is2=section.opts.length===2;
+    // Favorite = most backed by the crowd (lowest/most-negative odds). Best value = biggest payout (highest odds).
+    let favorite=section.opts[0],best=section.opts[0];
+    section.opts.forEach(o=>{
+      if(o.odds<favorite.odds)favorite=o;
+      if(o.odds>best.odds)best=o;
+    });
+    popPicks.push({pick:favorite.label,type:section.cat,odds:favorite.odds});
+    valuePicks.push({pick:best.label,type:section.cat,odds:best.odds});
+    html+=`<div class="odds-cat-lbl">${section.cat}</div>`;
+    html+=`<div class="${is2?'ou-grid':'sb-grid'}">`;
+    section.opts.forEach(opt=>{
+      const cls=is2?'ou-btn':'sb-btn';
+      const nameCls=is2?'ou-name':'sb-name';
+      const oddsCls=is2?'ou-odds':'sb-odds';
+      const noteCls=is2?'ou-line':'sb-note';
+      const tag=opt===favorite?'<span class="odds-tag pop">🔥 Popular</span>':(opt===best?'<span class="odds-tag value">💎 Valor</span>':'');
+      html+=`<div class="${cls}">
+        ${tag}
+        <span>
+          <span class="${nameCls}">${opt.label}</span>
+          ${opt.note?`<span class="${noteCls}">${opt.note}</span>`:''}
+        </span>
+        <span class="${oddsCls}">${fmtOdds(opt.odds)}</span>
+      </div>`;
+    });
+    html+='</div>';
+  });
+  html+=`<div class="parlay-hint">
+    <span style="font-size:1rem">⚡</span>
+    <span class="parlay-text">Método de finish + ronda es el mercado combinado más popular<br>de la afición esta semana en UCC 81</span>
+  </div>`;
+  area.innerHTML=html;
+  buildTrends(popPicks,valuePicks);
+}
+// ── Build the Live Trends drawer (most-backed picks + highest payout potential)
+function buildTrends(popPicks,valuePicks){
+  const popEl=document.getElementById('trendPopularList');
+  const valEl=document.getElementById('trendValueList');
+  if(!popEl||!valEl)return;
+  popEl.innerHTML=popPicks.map(p=>{
+    const pct=Math.round(impliedProb(p.odds));
+    return `<div class="trend-item">
+      <div class="trend-item-top">
+        <div><div class="trend-pick">${p.pick}</div><div class="trend-type">${p.type}</div></div>
+        <div class="trend-odds">${fmtOdds(p.odds)}</div>
+      </div>
+      <div class="trend-bar-track"><div class="trend-bar-fill" style="width:${pct}%"></div></div>
+      <span class="trend-pct">${pct}% de la afición lo respalda</span>
+    </div>`;
+  }).join('');
+  valEl.innerHTML=valuePicks.map(p=>{
+    const mult=payoutMult(p.odds).toFixed(1);
+    return `<div class="value-item">
+      <div><div class="trend-pick">${p.pick}</div><div class="trend-type">${p.type}</div></div>
+      <div class="value-payout">${mult}x</div>
+    </div>`;
+  }).join('');
+}
+// ── Select fight from tab
+function selectFight(idx){
+  activeFight=idx;
+  buildTabs();
+  buildOdds();
+}
+// ── Build timestamp markers
+function buildMarkers(){
+  const row=document.getElementById('tsMarkersRow');
+  row.innerHTML='';
+  FIGHTS.slice().reverse().forEach(f=>{
+    const m=document.createElement('div');
+    m.className='ts-mark'+(f.ts<=podPct+1?' active':'');
+    m.style.left=f.ts+'%';
+    m.innerHTML=`<div class="ts-dot"></div><div class="ts-mark-lbl">${f.label}</div>`;
+    m.onclick=()=>{
+      podPct=f.ts;
+      updateScrub();
+      const idx=FIGHTS.indexOf(f);
+      selectFight(idx);
+    };
+    row.appendChild(m);
+  });
+}
+// ── Update scrub bar UI
+function updateScrub(){
+  document.getElementById('scrubFill').style.width=podPct+'%';
+  document.getElementById('scrubThumb').style.left=podPct+'%';
+  const totalSec=65*60;
+  const cur=Math.round(totalSec*podPct/100);
+  const m=Math.floor(cur/60);
+  const s=String(cur%60).padStart(2,'0');
+  document.getElementById('curTime').textContent=m+':'+s;
+  // Update active marker
+  document.querySelectorAll('.ts-mark').forEach((el,i)=>{
+    const f=FIGHTS[FIGHTS.length-1-i];
+    el.classList.toggle('active',f&&f.ts<=podPct+1);
+  });
+  // Auto-switch to most recent fight discussed
+  let latest=-1;
+  FIGHTS.forEach((f,i)=>{if(f.ts<=podPct+1)latest=i;});
+  if(latest>=0&&latest!==activeFight){
+    activeFight=latest;buildTabs();buildOdds();
+  }
+}
+// ── Scrub click
+document.getElementById('scrubTrack').addEventListener('click',function(e){
+  const r=this.getBoundingClientRect();
+  podPct=Math.max(0,Math.min(100,((e.clientX-r.left)/r.width)*100));
+  updateScrub();
+});
+// ── Play / pause
+function togglePlay(){
+  isPlaying=!isPlaying;
+  const btn=document.getElementById('playBtn');
+  btn.classList.toggle('playing',isPlaying);
+  if(isPlaying){
+    podTimer=setInterval(()=>{
+      podPct=Math.min(100,podPct+100/65/60*0.5); // ~0.5s increments at 1x
+      if(podPct>=100){podPct=100;clearInterval(podTimer);isPlaying=false;btn.classList.remove('playing')}
+      updateScrub();
+    },500);
+  } else {
+    clearInterval(podTimer);
+  }
+}
+// ── Seek relative (seconds)
+function seekRel(sec){
+  const totalSec=65*60;
+  podPct=Math.max(0,Math.min(100,podPct+(sec/totalSec)*100));
+  updateScrub();
+}
+// ── Load episode (mini list click)
+function loadEp(n){
+  podPct=0;isPlaying=false;
+  clearInterval(podTimer);
+  document.getElementById('playBtn').classList.remove('playing');
+  updateScrub();
+}
+// ── LIVE TRENDS DRAWER TOGGLE
+function toggleTrends(){
+  trendsOpen=!trendsOpen;
+  document.getElementById('trendPanel').classList.toggle('open',trendsOpen);
+}
+// ── Init console
+buildMarkers();
+buildTabs();
+buildOdds();
+</script>
+</body>
+</html>
