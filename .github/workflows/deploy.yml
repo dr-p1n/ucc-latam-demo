@@ -1,0 +1,24 @@
+name: Deploy to Cloudflare Workers
+
+# Auto-deploy the static-assets Worker on every push to main.
+# Requires one repo secret: CLOUDFLARE_API_TOKEN
+# (Create it in Cloudflare dashboard → My Profile → API Tokens →
+#  "Edit Cloudflare Workers" template, then add it under
+#  GitHub repo → Settings → Secrets and variables → Actions.)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Cloudflare
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 2b29809d1391e748856d98e409edaf0d
+          command: deploy
