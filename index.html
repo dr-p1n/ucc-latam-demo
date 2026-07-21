@@ -1358,6 +1358,16 @@ img{filter:grayscale(100%) contrast(1.15)!important}
 .mem-card.featured .mem-cta{background:var(--r);border-color:var(--r);color:#fff}
 .mem-card.featured .mem-cta:hover{background:var(--r2)}
 .gym-hero-bg{filter:grayscale(100%) contrast(1.3) brightness(0.85)}
+/* ── "Próximamente" coming-soon overlay ── */
+.soon-wrap{position:relative}
+.soon-wrap>.soon-content{filter:blur(3px) saturate(.72);opacity:.38;pointer-events:none;user-select:none}
+.soon-overlay{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;padding:clamp(40px,9vh,120px) 24px 24px;z-index:6}
+.soon-card{max-width:440px;width:100%;text-align:center;background:rgba(14,14,16,.74);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1px solid rgba(255,255,255,.13);border-radius:16px;padding:34px 30px;box-shadow:0 26px 64px rgba(0,0,0,.6)}
+.soon-eyebrow{display:inline-block;font-size:11px;letter-spacing:.28em;font-weight:800;color:var(--r);text-transform:uppercase;margin-bottom:14px}
+.soon-eyebrow::before{content:"● ";font-size:9px;vertical-align:middle}
+.soon-title{font-size:30px;line-height:1.03;font-weight:800;letter-spacing:-.01em;color:#fff;text-transform:uppercase;margin:0 0 10px}
+.soon-date{font-size:19px;font-weight:700;color:#fff;margin-bottom:8px}
+.soon-sub{font-size:13.5px;color:rgba(255,255,255,.62);line-height:1.55}
 </style>
 </head>
 <body>
@@ -1462,36 +1472,29 @@ img{filter:grayscale(100%) contrast(1.15)!important}
       <div class="stat"><div class="stat-val" data-count="600">0<em>+</em></div><div class="stat-lbl">Asistentes por Evento</div></div>
     </div>
   </div>
-  <div class="ev-strip">
-    <div class="strip-head">
-      <h3>Próximos Eventos</h3>
-      <a onclick="go('archivo')">Ver Archivo Completo →</a>
+  <div class="ev-strip soon-wrap">
+    <div class="soon-content">
+      <div class="strip-head">
+        <h3>Próximos Eventos</h3>
+      </div>
+      <div class="ev-grid">
+        <div class="ev-card">
+          <img src="assets/photo-bundle-01.jpg" alt=""/>
+          <div class="ev-info">
+            <div class="ev-num">UCC</div>
+            <div class="ev-name">Próximo Evento</div>
+            <div class="ev-date">4 de Septiembre, 2026 · Cartelera por anunciar</div>
+          </div>
+          <div class="ev-badge-next">Próximo</div>
+        </div>
+      </div>
     </div>
-    <div class="ev-grid">
-      <div class="ev-card">
-        <img src="https://images.unsplash.com/photo-1545191050-96042d612b1f?w=700&q=85&auto=format&fit=crop" alt=""/>
-        <div class="ev-info">
-          <div class="ev-num">UCC 81</div>
-          <div class="ev-name">Noche de Campeones</div>
-          <div class="ev-date">12 Jul 2025 · Figali Convention Center</div>
-        </div>
-        <div class="ev-badge-next">Próximo</div>
-      </div>
-      <div class="ev-card">
-        <img src="https://images.unsplash.com/photo-1780476871385-311b94435524?w=700&q=85&auto=format&fit=crop" alt=""/>
-        <div class="ev-info">
-          <div class="ev-num">UCC 82</div>
-          <div class="ev-name">Hell in Cage 8</div>
-          <div class="ev-date">Sep 2025 · Ciudad de Panamá</div>
-        </div>
-      </div>
-      <div class="ev-card">
-        <img src="https://images.unsplash.com/photo-1575800605380-ca1d27744f2c?w=700&q=85&auto=format&fit=crop" alt=""/>
-        <div class="ev-info">
-          <div class="ev-num">UCC 83</div>
-          <div class="ev-name">Fantastic Fight Night 3</div>
-          <div class="ev-date">Nov 2025 · Ciudad de Panamá</div>
-        </div>
+    <div class="soon-overlay">
+      <div class="soon-card">
+        <span class="soon-eyebrow">Próximamente</span>
+        <div class="soon-title">Próximo Evento</div>
+        <div class="soon-date">4 de Septiembre, 2026</div>
+        <div class="soon-sub">Cartelera y boletos por anunciar. Mantente atento para el próximo evento de UCC.</div>
       </div>
     </div>
   </div>
@@ -1715,7 +1718,8 @@ img{filter:grayscale(100%) contrast(1.15)!important}
       <button class="btn-r">Ver Todo</button>
     </div>
   </div>
-  <div class="shop-body">
+  <div class="shop-body soon-wrap">
+    <div class="soon-content">
     <div class="shop-filter-bar">
       <div class="shop-filter-left">
         <span class="shop-filter-lbl">Filtrar:</span>
@@ -1724,7 +1728,7 @@ img{filter:grayscale(100%) contrast(1.15)!important}
         <button class="fselect" onclick="this.classList.toggle('on')">Ofertas Especiales <span class="fs-chev">▾</span></button>
       </div>
       <div class="shop-filter-right">
-        <span class="shop-count" id="shopCount">3 productos</span>
+        <span class="shop-count" id="shopCount">5 productos</span>
       </div>
     </div>
     <div class="cats">
@@ -1736,6 +1740,7 @@ img{filter:grayscale(100%) contrast(1.15)!important}
       <button class="cbtn">Suéteres</button>
       <button class="cbtn">Equipo</button>
       <button class="cbtn">Coleccionables</button>
+      <button class="cbtn">Fotos</button>
       <button class="cbtn">Ofertas</button>
       <button class="cbtn">25 Aniversario</button>
     </div>
@@ -1771,8 +1776,38 @@ img{filter:grayscale(100%) contrast(1.15)!important}
           <div class="prod-row"><div class="prod-price">$28</div><button class="add-btn">+ Añadir</button></div>
         </div>
       </div>
+      <div class="prod" data-cat="fotos|coleccionables">
+        <div class="prod-thumb">
+          <img src="assets/photo-bundle-01.jpg" alt="Foto oficial del evento UCC"/>
+          <div class="prod-badge">Nuevo</div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-cat">Fotos</div>
+          <div class="prod-name">Foto Oficial del Evento — Print 01</div>
+          <div class="prod-row"><div class="prod-price">$12</div><button class="add-btn">+ Añadir</button></div>
+        </div>
+      </div>
+      <div class="prod" data-cat="fotos|coleccionables">
+        <div class="prod-thumb">
+          <img src="assets/photo-bundle-02.jpg" alt="Foto oficial del evento UCC"/>
+          <div class="prod-badge">Nuevo</div>
+        </div>
+        <div class="prod-info">
+          <div class="prod-cat">Fotos</div>
+          <div class="prod-name">Foto Oficial del Evento — Print 02</div>
+          <div class="prod-row"><div class="prod-price">$12</div><button class="add-btn">+ Añadir</button></div>
+        </div>
+      </div>
     </div>
     <div class="shop-empty" id="shopEmptyMsg">No hay productos en esta categoría por el momento</div>
+    </div><!-- /soon-content -->
+    <div class="soon-overlay">
+      <div class="soon-card">
+        <span class="soon-eyebrow">Próximamente</span>
+        <div class="soon-title">Tienda UCC</div>
+        <div class="soon-sub">La tienda oficial abre muy pronto — equipo, coleccionables y fotos del evento, disponibles para compra en línea.</div>
+      </div>
+    </div>
   </div>
 </div>
 <!-- ═══ PODCAST CONSOLE ═══ -->
@@ -1909,7 +1944,8 @@ img{filter:grayscale(100%) contrast(1.15)!important}
 
 </div>
 <div class="page" id="p-podcast">
-  <div class="console">
+  <div class="console soon-wrap">
+    <div class="soon-content">
     <!-- ══ PANEL A: PLAYER ══ -->
     <div class="panel-player">
       <!-- Episode Header -->
@@ -1920,8 +1956,8 @@ img{filter:grayscale(100%) contrast(1.15)!important}
         </div>
         <div>
           <span class="pl-show-badge">🎙 Podcast Oficial · UCC Panama</span>
-          <div class="pl-ep-title">UCC 81 — Spot Bets:<br>Tipo de Finish, Rounds & Props</div>
-          <div class="pl-ep-num">Ep. 47 &nbsp;·&nbsp; 1h 05min &nbsp;·&nbsp; Julio 10, 2025</div>
+          <div class="pl-ep-title">Las Odds<br>Podcast Oficial de UCC</div>
+          <div class="pl-ep-num">Nuevos episodios muy pronto</div>
           <div class="pl-plat-row">
             <button class="pl-plat">
               <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
@@ -1969,44 +2005,13 @@ img{filter:grayscale(100%) contrast(1.15)!important}
       <div class="ep-desc-wrap">
         <div class="ep-sect-lbl">Sobre Este Episodio</div>
         <div class="ep-desc-text">
-          Pelea por pelea, analizamos el tipo de finish más probable, la ronda en que cae y si va a distancia. Todos los Spot Bets del UCC 81 — Noche de Campeones: valor real en las props, historial de cada peleador por método de victoria, y los picks que no vas a escuchar en ningún otro lado.
+          Las Odds es el podcast oficial de UCC — análisis de peleas, invitados especiales y cobertura de cada cartelera. Nuevos episodios muy pronto.
         </div>
       </div>
       <!-- Mini Episode List -->
       <div class="ep-mini-wrap">
         <div class="ep-sect-lbl">Episodios Recientes</div>
-        <div class="ep-mini-row" onclick="loadEp(46)">
-          <div class="ep-mini-n">46</div>
-          <div class="ep-mini-info">
-            <div class="ep-mini-title">UCC 80 — Post-Fight: Lo que dijeron los momios</div>
-            <div class="ep-mini-dur">58min</div>
-          </div>
-          <div class="ep-mini-ico"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <div class="ep-mini-row" onclick="loadEp(45)">
-          <div class="ep-mini-n">45</div>
-          <div class="ep-mini-info">
-            <div class="ep-mini-title">Guía Completa: Cómo leer momios americanos</div>
-            <div class="ep-mini-dur">44min</div>
-          </div>
-          <div class="ep-mini-ico"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <div class="ep-mini-row" onclick="loadEp(44)">
-          <div class="ep-mini-n">44</div>
-          <div class="ep-mini-info">
-            <div class="ep-mini-title">Top 5 Upsets del 2025 en Artes Marciales</div>
-            <div class="ep-mini-dur">51min</div>
-          </div>
-          <div class="ep-mini-ico"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
-        <div class="ep-mini-row" onclick="loadEp(43)">
-          <div class="ep-mini-n">43</div>
-          <div class="ep-mini-info">
-            <div class="ep-mini-title">Especial: Reglas del Grappling y su impacto en las líneas</div>
-            <div class="ep-mini-dur">1h 02min</div>
-          </div>
-          <div class="ep-mini-ico"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        </div>
+        <div class="ep-mini-empty" style="padding:16px 2px;color:rgba(255,255,255,.5);font-size:13px">El catálogo de episodios estará disponible próximamente.</div>
       </div>
     </div>
     <!-- ══ PANEL B: ACTION / ODDS ══ -->
@@ -2037,6 +2042,14 @@ img{filter:grayscale(100%) contrast(1.15)!important}
           <div id="trendValueList"></div>
           <div class="trend-micro">Cuotas ilustrativas en base a la afición · Apuestas gestionadas por nuestro <strong>partner oficial</strong>, no en ucclatam.com</div>
         </div>
+      </div>
+    </div>
+    </div><!-- /soon-content -->
+    <div class="soon-overlay">
+      <div class="soon-card">
+        <span class="soon-eyebrow">Próximamente</span>
+        <div class="soon-title">Las Odds · Podcast</div>
+        <div class="soon-sub">El podcast oficial de UCC regresa muy pronto con nuevos episodios y análisis de cada cartelera.</div>
       </div>
     </div>
   </div>
